@@ -1,0 +1,395 @@
+/* ============================================
+   Atlas Workbench - 全局样式系统
+   ============================================ */
+
+/* ============ 垂直节奏系统（Vertical Rhythm System） ============ */
+/* 
+ * 专业解决方案：解决 CJK（中日韩）字体与拉丁字体的垂直度量差异
+ * 
+ * 核心原理：
+ * 1. 统一基准线高（Baseline Grid）：8px
+ * 2. 所有字体大小和行高都是 8px 的倍数
+ * 3. 使用 CSS Custom Properties 确保全局一致性
+ * 
+ * 优势：
+ * - 完全消除中英文切换时的布局跳动
+ * - 建立可预测的垂直间距系统
+ * - 所有组件自动对齐到网格
+ */
+
+:root {
+    /* ========== 基础度量单位 ========== */
+    --base-unit: 8px;
+    /* 基准单位：8px grid */
+    --base-font-size: 16px;
+    /* 基础字号：16px（1rem）*/
+
+    /* ========== 垂直节奏定义 ========== */
+    /* 行高系数 - 针对 CJK 和拉丁字符优化 */
+    --line-height-tight: 1.25;
+    /* 紧凑：用于大标题 */
+    --line-height-normal: 1.6;
+    /* 标准：body 文本（最重要！）*/
+    --line-height-relaxed: 1.75;
+    /* 宽松：段落文本 */
+
+    /* ========== 字体大小系统（基于 8px grid）========== */
+    --font-size-xs: 12px;
+    /* 0.75rem - 辅助文字 */
+    --font-size-sm: 14px;
+    /* 0.875rem - 次要文字 */
+    --font-size-base: 16px;
+    /* 1rem - 正文（默认）*/
+    --font-size-lg: 18px;
+    /* 1.125rem - 强调文字 */
+    --font-size-xl: 20px;
+    /* 1.25rem - 小标题 */
+    --font-size-2xl: 24px;
+    /* 1.5rem - 二级标题 */
+    --font-size-3xl: 32px;
+    /* 2rem - 一级标题 */
+    --font-size-4xl: 40px;
+    /* 2.5rem - 超大标题 */
+
+    /* ========== 间距系统（基于 8px grid）========== */
+    --spacing-1: 8px;
+    /* 1 unit */
+    --spacing-2: 16px;
+    /* 2 units */
+    --spacing-3: 24px;
+    /* 3 units */
+    --spacing-4: 32px;
+    /* 4 units */
+    --spacing-5: 40px;
+    /* 5 units */
+    --spacing-6: 48px;
+    /* 6 units */
+}
+
+/* ============ CSS Reset ============ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============ Body 基础样式 ============ */
+body {
+    margin: 0;
+
+    /* 优化的字体栈 - CJK 优先 */
+    font-family:
+        /* 系统原生字体（性能最优）*/
+        -apple-system, BlinkMacSystemFont,
+        /* Windows 系统字体 */
+        'Segoe UI',
+        /* CJK 字体（中文优先）*/
+        'PingFang SC', 'Microsoft YaHei', '微软雅黑',
+        'Noto Sans CJK SC', 'Source Han Sans SC',
+        /* 通用西文字体 */
+        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+        'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        /* 通用回退 */
+        sans-serif,
+        /* Emoji 支持 */
+        'Apple Color Emoji', 'Segoe UI Emoji';
+
+    /* 基础字体设置 */
+    font-size: var(--base-font-size);
+
+    /* ⭐ 关键：统一行高，解决 CJK 垂直度量问题 */
+    line-height: var(--line-height-normal);
+
+    /* 字体渲染优化 */
+    -webkit-font-smoothing: antialiased;
+    /* macOS 字体平滑 */
+    -moz-osx-font-smoothing: grayscale;
+    /* Firefox macOS 优化 */
+    text-rendering: optimizeLegibility;
+    /* 优化连字和字距 */
+
+    /* 防止字体膨胀（iOS Safari）*/
+    -webkit-text-size-adjust: 100%;
+
+    /* 主题背景 */
+    background: #1A1B26;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* ============ 元素归一化 ============ */
+/* 
+ * 🎯 核心原理：CSS 继承机制
+ * 
+ * body 上设置的 font-size, line-height, font-family 会自动继承给：
+ * - div, span, p, article, section, header, footer, nav, aside
+ * - 任何新的 HTML 标签
+ * - 任何第三方插件的自定义组件
+ * 
+ * ✅ 所以这些元素无需手动设置，会自动继承！
+ * 
+ * 我们只需要覆盖以下特殊元素：
+ */
+
+/* 1️⃣ 标题元素 - 使用紧凑行高 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: var(--line-height-tight);
+    /* 标题需要更紧凑的行高 */
+    margin: 0;
+    /* 重置浏览器默认 margin */
+}
+
+/* 2️⃣ 表单元素 - 强制继承（浏览器默认不继承）*/
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    /* 继承 body 的字体栈 */
+    font-size: inherit;
+    /* 继承 body 的字号 */
+    line-height: var(--line-height-normal);
+    /* 统一行高 */
+}
+
+/* 
+ * 🎉 上面的规则已经覆盖所有情况！
+ * 
+ * 任何其他元素（包括未来添加的、插件的、自定义的）都会自动继承 body 的设置，
+ * 无需在这里添加任何规则！
+ */
+
+#root {
+    width: 100vw;
+    height: 100vh;
+}
+
+/* 代码字体 */
+code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ============ 动画定义 ============ */
+
+/* 淡入上浮动画 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 淡入动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* 从左滑入 */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 缩放进入 */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 脉冲效果 */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* 渐变背景动画 */
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ============ 动画类 ============ */
+
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.scale-in {
+    animation: scaleIn 0.5s ease-out;
+}
+
+/* ============ 主题变量 ============ */
+
+:root {
+    /* 深色主题（默认）- 现代深灰风格 */
+    --bg-primary: #18181B;
+    /* 主背景：深灰（不再是纯黑）*/
+    --bg-secondary: #09090B;
+    /* Sidebar 背景：极深灰 */
+    --bg-tertiary: #18181B;
+    /* 页面背景：深灰 */
+    --bg-card: #27272A;
+    /* 卡片/按钮背景：中深灰 */
+    --bg-card-hover: #3F3F46;
+    /* 卡片悬停：浅一级的灰 */
+
+    --text-primary: #FAFAFA;
+    /* 主文字：接近纯白 */
+    --text-secondary: #A1A1AA;
+    /* 次要文字：中灰 */
+    --text-tertiary: #71717A;
+    /* 三级文字：暗灰 */
+
+    --border-primary: rgba(255, 255, 255, 0.1);
+    /* 主边框：淡淡的白 */
+    --border-secondary: rgba(255, 255, 255, 0.05);
+    /* 次要边框：极淡 */
+
+    --accent-primary: #3B82F6;
+    /* 强调色：鲜明的蓝 */
+    --accent-hover: #2563EB;
+    /* 悬停：深蓝 */
+    --accent-light: rgba(59, 130, 246, 0.12);
+    /* 淡蓝背景 */
+
+    --success: #22C55E;
+    /* 成功：鲜绿 */
+    --warning: #F97316;
+    /* 警告：鲜橙 */
+    --danger: #EF4444;
+    /* 危险：鲜红 */
+
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="light"] {
+    /* 浅色主题 - 重新设计层次 */
+    --bg-primary: #F3F4F6;
+    /* 主背景：浅灰 */
+    --bg-secondary: #FFFFFF;
+    /* Sidebar 背景：纯白 ← 反转！*/
+    --bg-tertiary: #F9FAFB;
+    /* 页面背景：更浅的灰 */
+    --bg-card: #F3F4F6;
+    /* 卡片/按钮背景：浅灰 ← 反转！*/
+    --bg-card-hover: #E5E7EB;
+    /* 卡片悬停：中灰（加深对比）*/
+
+    --text-primary: #1F2937;
+    /* 主文字：深灰（加深）*/
+    --text-secondary: #4B5563;
+    /* 次要文字：中灰（加深）*/
+    --text-tertiary: #6B7280;
+    /* 三级文字：浅灰（加深）*/
+
+    --border-primary: rgba(0, 0, 0, 0.12);
+    /* 主边框：适中 */
+    --border-secondary: rgba(0, 0, 0, 0.06);
+    /* 次要边框 */
+
+    --accent-primary: #3B82F6;
+    /* 强调色：蓝色（保持） */
+    --accent-hover: #2563EB;
+    --accent-light: rgba(59, 130, 246, 0.1);
+
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 应用主题变量到全局元素 */
+body {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--text-tertiary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
