@@ -6,7 +6,7 @@
  * 设计理念：科技感的文字效果，适合标题和重要提示
  */
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { motion, HTMLMotionProps } from 'motion/react';
 
 const styles = {
@@ -53,7 +53,12 @@ interface DecryptedTextProps extends HTMLMotionProps<'span'> {
     startDelay?: number;
 }
 
-export default function DecryptedText({
+export interface DecryptedTextHandle {
+    /** 重新播放解密动画 */
+    replay: () => void;
+}
+
+const DecryptedText = forwardRef<DecryptedTextHandle, DecryptedTextProps>(({
     text,
     speed = 50,
     maxIterations = 10,
@@ -67,14 +72,26 @@ export default function DecryptedText({
     animateOn = 'hover',
     startDelay = 0,  // 默认无延迟
     ...props
-}: DecryptedTextProps) {
+}, ref) => {
     const [displayText, setDisplayText] = useState<string>(text);
     const [isHovering, setIsHovering] = useState<boolean>(false);
     const [isScrambling, setIsScrambling] = useState<boolean>(false);
     const [revealedIndices, setRevealedIndices] = useState<Set<number>>(new Set());
     const [hasAnimated, setHasAnimated] = useState<boolean>(false);
-    const [currentCharIteration, setCurrentCharIteration] = useState<number>(0);  // 当前字符的迭代次数
+    const [playKey, setPlayKey] = useState<number>(0); // 用于强制重新播放动画的 key
+    const [, setCurrentCharIteration] = useState<number>(0); // 当前字符的迭代次数
     const containerRef = useRef<HTMLSpanElement>(null);
+
+    useImperativeHandle(ref, () => ({
+        replay: () => {
+            setIsHovering(true);
+            setHasAnimated(true); // 确保再次进入视野不会触发（如果是View模式），但这里是手动触发
+            setIsScrambling(true);
+            setRevealedIndices(new Set());
+            setCurrentCharIteration(0);
+            setPlayKey(prev => prev + 1); // 强制触发 useEffect
+        }
+    }));
 
     useEffect(() => {
         let interval: ReturnType<typeof setInterval>;
@@ -148,6 +165,9 @@ export default function DecryptedText({
 
         if (isHovering) {
             setIsScrambling(true);
+            // 立即更新显示文本，解决输入时的延迟问题
+            setDisplayText(shuffleText(text, revealedIndices));
+
             interval = setInterval(() => {
                 if (sequential) {
                     // 逐字解密模式：每个字符闪烁 maxIterations 次后再 reveal
@@ -203,7 +223,7 @@ export default function DecryptedText({
         return () => {
             if (interval) clearInterval(interval);
         };
-    }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly]);
+    }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly, playKey]);
 
     useEffect(() => {
         if (animateOn !== 'view' && animateOn !== 'both') return;
@@ -269,4 +289,6 @@ export default function DecryptedText({
             </span>
         </motion.span>
     );
-}
+});
+
+export default DecryptedText;

@@ -2,14 +2,13 @@
  * 设置页面组件 - 使用 UI 组件库
  */
 
-import { useState } from 'react';
+
 import { Settings, Bell, Download, Save, Folder, FolderOpen, Hammer, RefreshCw, Plug, AlertCircle, XCircle, Info } from 'lucide-react';
 import {
     Toggle,
     Input,
     Select,
     Button,
-    Slider,
     SegmentedControl,
     SettingCard,
     SettingItem
@@ -44,34 +43,7 @@ export default function SettingsPage() {  // 不再需要 props
     const { t } = useTranslation();  // 获取翻译函数
 
     // ===== 分割线组件 =====
-    const Divider = ({ label }: { label: string }) => (
-        <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            margin: '48px 0 32px 0',
-        }}>
-            <div style={{
-                flex: 1,
-                height: '1px',
-                background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent)',
-            }} />
-            <span style={{
-                padding: '0 20px',
-                fontSize: '14px',
-                color: '#6B7280',
-                fontWeight: '600',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-            }}>
-                {label}
-            </span>
-            <div style={{
-                flex: 1,
-                height: '1px',
-                background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent)',
-            }} />
-        </div>
-    );
+
 
     return (
         <div style={{
@@ -125,6 +97,9 @@ export default function SettingsPage() {  // 不再需要 props
                         options={[
                             { value: 'zh-CN', label: t('settings.languageZhCN', '简体中文') },
                             { value: 'en-US', label: t('settings.languageEnUS', 'English') },
+                            { value: 'lol-US', label: t('settings.languageLolUS', 'LOLCAT') },
+                            { value: 'en-UD', label: t('settings.languageEnUD', 'uʍo◖ ǝpısd∩') },
+                            { value: 'tlh', label: t('settings.languageTlh', 'tlhIngan Hol') },
                         ]}
                     />
                     <Toggle

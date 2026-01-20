@@ -183,12 +183,17 @@ export default function Select({
                             top: `${buttonRect.bottom + 4}px`,
                             left: `${buttonRect.left}px`,
                             width: `${buttonRect.width}px`,
-                            background: 'var(--bg-secondary)',
-                            border: '2px solid var(--border-primary)',
+
+                            // 毛玻璃效果
+                            background: 'rgba(39, 39, 42, 0.95)',
+                            backdropFilter: 'blur(16px)',
+                            WebkitBackdropFilter: 'blur(16px)',
+
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
                             borderRadius: '8px',
                             overflow: 'hidden',
                             zIndex: 9999,
-                            boxShadow: 'var(--shadow-lg)',
+                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
                             animation: 'selectDropdown 0.2s ease-out',
                             maxHeight: '280px',
                             overflowY: 'auto',
@@ -242,13 +247,13 @@ export default function Select({
                                         padding: '12px 16px',
                                         fontSize: '14px',
                                         background: isSelected
-                                            ? 'rgba(59, 130, 246, 0.2)'
+                                            ? 'rgba(255, 255, 255, 0.12)'
                                             : isHovered
-                                                ? 'rgba(255, 255, 255, 0.1)'
+                                                ? 'rgba(255, 255, 255, 0.06)'
                                                 : 'transparent',
                                         border: 'none',
                                         borderTop: index === 0 ? 'none' : '1px solid rgba(255, 255, 255, 0.05)',
-                                        color: isSelected ? 'var(--accent-primary)' : 'var(--text-primary)',
+                                        color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
                                         cursor: 'pointer',
                                         textAlign: 'left',
                                         display: 'flex',
@@ -271,7 +276,7 @@ export default function Select({
                                     {isSelected && (
                                         <span style={{
                                             fontSize: '16px',
-                                            color: '#3B82F6',
+                                            color: '#FFFFFF',
                                         }}>
                                             ✓
                                         </span>

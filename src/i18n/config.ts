@@ -13,6 +13,9 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import zhCN from '../locales/zh-CN.json';
 import enUS from '../locales/en-US.json';
+import lolUS from '../locales/lol-US.json';
+import enUD from '../locales/en-UD.json';
+import tlh from '../locales/tlh.json';
 
 // 初始化 i18next
 i18n
@@ -36,6 +39,15 @@ i18n
             },
             'en-US': {
                 translation: enUS  // 英文翻译
+            },
+            'lol-US': {
+                translation: lolUS // LOLCAT
+            },
+            'en-UD': {
+                translation: enUD // Upside-Down
+            },
+            'tlh': {
+                translation: tlh // Klingon
             },
         },
 

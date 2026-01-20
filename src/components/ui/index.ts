@@ -13,5 +13,6 @@ export { default as Slider } from './Slider';
 export { default as SegmentedControl } from './SegmentedControl';
 export { default as SettingCard } from './SettingCard';
 export { default as Modal, SettingItem } from './Modal'; // Modal 和 SettingItem 在同一文件
+export { default as DecryptedText } from './DecryptedText';
 
 

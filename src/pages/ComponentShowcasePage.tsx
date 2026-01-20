@@ -4,8 +4,8 @@
  * 用途：展示所有UI组件的使用效果
  */
 
-import { useState } from 'react';
-import { Palette, ToggleRight, ClipboardList, Sliders, Circle, Save, Trash2, Settings, Hammer, Globe, Info, Keyboard } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Palette, ToggleRight, ClipboardList, Sliders, Circle, Save, Trash2, Settings, Hammer, Globe, Info, Keyboard, Text, RefreshCw } from 'lucide-react';
 import {
     Toggle,
     Input,
@@ -14,7 +14,8 @@ import {
     Slider,
     SegmentedControl,
     SettingCard,
-    SettingItem
+    SettingItem,
+    DecryptedText
 } from '../components/ui';
 
 function ComponentShowcasePage() {
@@ -26,6 +27,11 @@ function ComponentShowcasePage() {
     const [slider1, setSlider1] = useState(50);
     const [volumeSlider, setVolumeSlider] = useState(75); // 音量滑块
     const [segment1, setSegment1] = useState('a');
+    const [decryptedText, setDecryptedText] = useState(''); // 解密文本
+    const [decryptedTextByWordToggle, setDecryptedTextByWordToggle] = useState(false); // 解密文本切换
+    const [decryptedTextSpeed, setDecryptedTextSpeed] = useState(20); // 解密文本速度
+    const [decryptedTextIterations, setDecryptedTextIterations] = useState(15); // 解密文本迭代次数
+    const [decryptedTextDelay, setDecryptedTextDelay] = useState(500); // 解密文本延迟
     const [themeSegment, setThemeSegment] = useState('dark'); // 主题选择
 
     // Modal 内组件的状态
@@ -34,6 +40,9 @@ function ComponentShowcasePage() {
     const [modalProxy, setModalProxy] = useState('');
     const [modalPort, setModalPort] = useState('');
     const [modalProxyEnabled, setModalProxyEnabled] = useState(false);
+
+    // DecryptedText Ref
+    const decryptedTextRef = useRef<any>(null);
 
     return (
         <div style={{
@@ -138,6 +147,16 @@ function ComponentShowcasePage() {
                         step={5}
                         unit="%"
                     />
+                    <Slider
+                        label="带输入框模式"
+                        value={slider1}
+                        onChange={setSlider1}
+                        min={0}
+                        max={100}
+                        unit="%"
+                        mode="input"
+                        description="滑块 + 输入框组合，支持精确输入"
+                    />
                 </SettingCard>
 
                 {/* SegmentedControl 演示 */}
@@ -162,6 +181,85 @@ function ComponentShowcasePage() {
                             { value: 'dark', label: '深色' },
                             { value: 'auto', label: '自动' },
                         ]}
+                    />
+                </SettingCard>
+
+                {/* DecryptedText 演示 */}
+                <SettingCard title="DecryptedText 解密文本" icon={Text}>
+                    <p style={{
+                        marginLeft: '20px',      // [布局] 左外边距
+                        marginTop: '10px',       // [布局] 上外边距 (段前距)
+                        marginBottom: '10px',    // [布局] 下外边距 (段后距)
+                        textAlign: 'center',       // [排版] 对齐方式: left, center, right, justify
+                        lineHeight: '1.8',       // [排版] 行高 (行间距), 建议 1.5 - 2.0
+                        letterSpacing: '4px',    // [排版] 字间距 (每个字符之间的距离)
+                        textIndent: '0em',       // [排版] 首行缩进 (2个字符宽度)
+                        fontSize: '26px',        // [字体] 字体大小
+                        fontWeight: '700',       // [字体] 字体粗细: 100-900, bold
+                        color: 'var(--text-primary)', // [颜色] 字体颜色
+                        textShadow: '0 0 10px rgba(255,255,255,0.1)', // [特效] 文字光晕
+                        borderLeft: '4px solid var(--primary)', // [装饰] 左侧高亮条
+                        paddingLeft: '12px',     // [布局] 左内边距 (配合borderLeft使用)
+                    }}>
+                        <DecryptedText
+                            ref={decryptedTextRef}
+                            text={decryptedText || 'Atlas'}
+                            animateOn="view"
+                            revealDirection="start"
+                            sequential={decryptedTextByWordToggle}       // 改为逐字解密（更容易看清）
+                            speed={decryptedTextSpeed}              // 每个字符间隔 80 毫秒（够慢了）
+                            maxIterations={decryptedTextIterations}      // 每个字符闪烁 15 次再显示
+                            startDelay={decryptedTextDelay}         // 延迟 1 秒后开始解密
+                        />
+                    </p>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-end' }}>
+                        <div style={{ flex: 1 }}>
+                            <Input
+                                label="文本输入"
+                                value={decryptedText}
+                                onChange={setDecryptedText}
+                                placeholder="Atlas"
+                            />
+                        </div>
+                        <div style={{ marginBottom: '16px', marginRight: '20px' }}>
+                            <Button
+                                label="重置动画"
+                                onClick={() => decryptedTextRef.current?.replay()}
+                                icon={RefreshCw}
+                            />
+                        </div>
+                    </div>
+                    <Toggle
+                        label="逐字解密"
+                        checked={decryptedTextByWordToggle}
+                        onChange={setDecryptedTextByWordToggle}
+                    />
+                    <Slider
+                        label="字符解密间隔"
+                        value={decryptedTextSpeed}
+                        onChange={setDecryptedTextSpeed}
+                        min={1}
+                        max={100}
+                        mode="input"
+                        unit="ms"
+                    />
+                    <Slider
+                        label="字符解密闪烁次数"
+                        value={decryptedTextIterations}
+                        onChange={setDecryptedTextIterations}
+                        min={0}
+                        max={50}
+                        mode="input"
+                        unit="次"
+                    />
+                    <Slider
+                        label="字符解密延迟"
+                        value={decryptedTextDelay}
+                        onChange={setDecryptedTextDelay}
+                        min={0}
+                        max={1000}
+                        mode="input"
+                        unit="ms"
                     />
                 </SettingCard>
 
