@@ -296,9 +296,9 @@ code {
 :root {
     /* 深色主题（默认）- 现代深灰风格 */
     --bg-primary: #18181B;
-    /* 主背景：深灰（不再是纯黑）*/
-    --bg-secondary: #09090B;
-    /* Sidebar 背景：极深灰 */
+    /* Sidebar 背景：极深灰#09090b */
+    --bg-secondary: #09090b85;
+    /* 主背景：深灰 */
     --bg-tertiary: #18181B;
     /* 页面背景：深灰 */
     --bg-card: #27272A;
@@ -334,7 +334,16 @@ code {
 
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.8);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    /* Select 下拉框阴影（深色模式：更深更柔和）*/
+
+    /* Select 下拉框专用变量（深色模式）*/
+    --dropdown-bg: rgba(39, 39, 42, 0.95);
+    /* 下拉框背景：半透明深灰带毛玻璃效果 */
+    --dropdown-option-selected: rgba(255, 255, 255, 0.12);
+    /* 选中选项：半透明白色 */
+    --dropdown-option-hover: rgba(255, 255, 255, 0.06);
+    /* 悬停选项：更淡的半透明白色 */
 }
 
 [data-theme="light"] {
@@ -366,14 +375,23 @@ code {
     /* 强调色：蓝色（保持） */
     --accent-hover: #2563EB;
     --accent-light: rgba(59, 130, 246, 0.1);
-
+    /* 按钮 - 成功、警告、危险 */
     --success: #10B981;
     --warning: #F59E0B;
     --danger: #EF4444;
-
+    /* 按钮 - 阴影 */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    /* Select 下拉框阴影（浅色模式：轻柔）*/
+
+    /* Select 下拉框专用变量（浅色模式）*/
+    --dropdown-bg: rgba(255, 255, 255, 0.98);
+    /* 下拉框背景：接近纯白带毛玻璃效果 */
+    --dropdown-option-selected: #E5E7EB;
+    /* 选中选项：浅灰色 */
+    --dropdown-option-hover: #F3F4F6;
+    /* 悬停选项：更浅的灰色 */
 }
 
 /* 应用主题变量到全局元素 */

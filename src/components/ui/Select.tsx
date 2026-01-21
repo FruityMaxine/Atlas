@@ -184,16 +184,16 @@ export default function Select({
                             left: `${buttonRect.left}px`,
                             width: `${buttonRect.width}px`,
 
-                            // 毛玻璃效果
-                            background: 'rgba(39, 39, 42, 0.95)',
+                            // 毛玻璃效果 - 使用专用主题变量
+                            background: 'var(--dropdown-bg)',
                             backdropFilter: 'blur(16px)',
                             WebkitBackdropFilter: 'blur(16px)',
 
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            border: '1px solid var(--border-primary)',
                             borderRadius: '8px',
                             overflow: 'hidden',
                             zIndex: 9999,
-                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
+                            boxShadow: 'var(--shadow-lg)',
                             animation: 'selectDropdown 0.2s ease-out',
                             maxHeight: '280px',
                             overflowY: 'auto',
@@ -218,16 +218,16 @@ export default function Select({
                             }
                             
                             div[style*="overflowY: auto"]::-webkit-scrollbar-track {
-                                background: rgba(255, 255, 255, 0.05);
+                                background: var(--bg-secondary);
                             }
                             
                             div[style*="overflowY: auto"]::-webkit-scrollbar-thumb {
-                                background: rgba(59, 130, 246, 0.5);
+                                background: var(--text-tertiary);
                                 border-radius: 3px;
                             }
                             
                             div[style*="overflowY: auto"]::-webkit-scrollbar-thumb:hover {
-                                background: rgba(59, 130, 246, 0.7);
+                                background: var(--text-secondary);
                             }
                         `}</style>
 
@@ -247,13 +247,13 @@ export default function Select({
                                         padding: '12px 16px',
                                         fontSize: '14px',
                                         background: isSelected
-                                            ? 'rgba(255, 255, 255, 0.12)'
+                                            ? 'var(--dropdown-option-selected)'
                                             : isHovered
-                                                ? 'rgba(255, 255, 255, 0.06)'
+                                                ? 'var(--dropdown-option-hover)'
                                                 : 'transparent',
                                         border: 'none',
-                                        borderTop: index === 0 ? 'none' : '1px solid rgba(255, 255, 255, 0.05)',
-                                        color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
+                                        borderTop: index === 0 ? 'none' : '1px solid var(--border-secondary)',
+                                        color: 'var(--text-primary)',
                                         cursor: 'pointer',
                                         textAlign: 'left',
                                         display: 'flex',
@@ -276,7 +276,7 @@ export default function Select({
                                     {isSelected && (
                                         <span style={{
                                             fontSize: '16px',
-                                            color: '#FFFFFF',
+                                            color: 'var(--accent-primary)',
                                         }}>
                                             ✓
                                         </span>

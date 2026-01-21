@@ -17,6 +17,7 @@ import { Download, Wrench } from 'lucide-react';
 import { Sidebar } from './components/layout';
 import TargetCursor from './components/ui/TargetCursor';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';  // 导入 useSettings
+import { ToastProvider } from './contexts/ToastContext';
 
 // 导入页面组件
 import HomePage from './pages/HomePage';
@@ -97,7 +98,9 @@ function App() {
     return (
         // 用 SettingsProvider 包裹整个应用，这样所有组件都能访问设置
         <SettingsProvider>
-            <AppContent />
+            <ToastProvider>
+                <AppContent />
+            </ToastProvider>
         </SettingsProvider>
     );
 }

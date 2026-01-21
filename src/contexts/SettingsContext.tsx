@@ -37,6 +37,9 @@ interface SettingsContextType {
     maxConcurrent: string;          // 最大并发
     autoBackup: boolean;            // 自动备份
     backupInterval: string;         // 备份间隔
+    autoClean: boolean;             // 自动清理
+    cleanInterval: number;          // 清理间隔（天数）
+    cleanSize: number;              // 清理大小（GB）
     // ===== 设置更新函数 =====
     setMouseAnimation: (value: boolean) => void;  // 修改鼠标动画的函数
     setLanguage: (value: string) => void;   // 修改语言的函数
@@ -48,6 +51,9 @@ interface SettingsContextType {
     setMaxConcurrent: (value: string) => void;  // 修改最大并发的函数
     setAutoBackup: (value: boolean) => void; // 修改自动备份的函数
     setBackupInterval: (value: string) => void; // 修改备份间隔的函数
+    setAutoClean: (value: boolean) => void; // 修改自动清理的函数
+    setCleanInterval: (value: number) => void; // 修改清理间隔的函数
+    setCleanSize: (value: number) => void; // 修改清理大小的函数
 }
 
 // ===== 2. 创建 Context 对象 =====
@@ -95,9 +101,14 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     const [downloadPath, setDownloadPath] = useState('./downloads');  // 默认下载路径
     const [maxConcurrent, setMaxConcurrent] = useState('3');  // 默认最大并发
 
-    // 高级设置 - 备份
+    // 基础设置 - 备份
     const [autoBackup, setAutoBackup] = useState(false);  // 默认不自动备份
     const [backupInterval, setBackupInterval] = useState('daily');  // 默认备份间隔
+
+    // 基础设置 - 文件管理
+    const [autoClean, setAutoClean] = useState(false);  // 默认不自动清理
+    const [cleanInterval, setCleanInterval] = useState(7);  // 默认清理间隔（7天）
+    const [cleanSize, setCleanSize] = useState(1);  // 默认清理大小（1GB）
 
     // ===== 连接 i18n =====
     /**
@@ -136,6 +147,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         setAutoBackup,
         backupInterval,
         setBackupInterval,
+        autoClean,
+        setAutoClean,
+        cleanInterval,
+        setCleanInterval,
+        cleanSize,
+        setCleanSize,
     };
 
     // ===== 返回 Provider 组件 =====

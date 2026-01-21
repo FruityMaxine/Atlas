@@ -28,7 +28,7 @@ function ComponentShowcasePage() {
     const [volumeSlider, setVolumeSlider] = useState(75); // 音量滑块
     const [segment1, setSegment1] = useState('a');
     const [decryptedText, setDecryptedText] = useState(''); // 解密文本
-    const [decryptedTextByWordToggle, setDecryptedTextByWordToggle] = useState(false); // 解密文本切换
+    const [decryptedTextByWordToggle, setDecryptedTextByWordToggle] = useState(true); // 解密文本切换
     const [decryptedTextSpeed, setDecryptedTextSpeed] = useState(20); // 解密文本速度
     const [decryptedTextIterations, setDecryptedTextIterations] = useState(15); // 解密文本迭代次数
     const [decryptedTextDelay, setDecryptedTextDelay] = useState(500); // 解密文本延迟
@@ -286,9 +286,37 @@ function ComponentShowcasePage() {
                         <h3 style={{ color: 'var(--text-primary)', marginBottom: '16px', fontSize: '14px' }}>
                             带图标
                         </h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
                             <Button label="保存" onClick={() => { }} icon={Save} variant="primary" />
                             <Button label="删除" onClick={() => { }} icon={Trash2} variant="danger" />
+                        </div>
+
+                        <h3 style={{ color: 'var(--text-primary)', marginBottom: '16px', fontSize: '14px' }}>
+                            二次确认功能 ⭐
+                        </h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <Button
+                                label="保存更改"
+                                onClick={() => alert('已保存！')}
+                                icon={Save}
+                                variant="primary"
+                                requireConfirm
+                                confirmTitle="确认保存"
+                                confirmMessage="确定要保存当前更改吗？此操作将覆盖原有数据。"
+                                confirmButtonText="保存"
+                                cancelButtonText="取消"
+                            />
+                            <Button
+                                label="删除所有数据"
+                                onClick={() => alert('已删除！')}
+                                icon={Trash2}
+                                variant="danger"
+                                requireConfirm
+                                confirmTitle="⚠️ 危险操作"
+                                confirmMessage="您即将删除所有数据！此操作不可撤销，请谨慎操作。"
+                                confirmButtonText="确认删除"
+                                cancelButtonText="我再想想"
+                            />
                         </div>
                     </div>
                 </SettingCard>

@@ -9,6 +9,7 @@ import {
     Input,
     Select,
     Button,
+    Slider,
     SegmentedControl,
     SettingCard,
     SettingItem
@@ -34,9 +35,13 @@ export default function SettingsPage() {  // 不再需要 props
         // 基础设置 - 下载
         downloadPath, setDownloadPath,
         maxConcurrent, setMaxConcurrent,
-        // 高级设置 - 备份
+        // 基础设置 - 备份
         autoBackup, setAutoBackup,
-        backupInterval, setBackupInterval
+        backupInterval, setBackupInterval,
+        // 基础设置 - 清理
+        autoClean, setAutoClean,
+        cleanInterval, setCleanInterval,
+        cleanSize, setCleanSize,
     } = useSettings();  // 只调用一次 useSettings()！
 
     // ===== 翻译 Hook =====
@@ -125,7 +130,7 @@ export default function SettingsPage() {  // 不再需要 props
                 {/* ===== 基础设置 ===== */}
                 {/* <Divider label="基础设置" /> */}
 
-                <SettingCard title={t('settings.notificationSettings', '通知设置')} icon={Bell}>
+                <SettingCard title={t('settings.BasicSettings', '基础设置')} icon={Bell}>
                     <Toggle
                         checked={enableNotification}
                         onChange={setEnableNotification}
@@ -138,38 +143,6 @@ export default function SettingsPage() {  // 不再需要 props
                         label={t('settings.soundEnabled', '声音提示')}
                         description={t('settings.soundEnabledDesc', '播放通知声音')}
                     />
-                </SettingCard>
-                <SettingCard title={t('settings.notificationSettings')} icon={Bell}>
-                    <Toggle
-                        checked={enableNotification}
-                        onChange={setEnableNotification}
-                        label={t('settings.enableNotification')}
-                        description={t('settings.enableNotificationDesc')}
-                    />
-                    <Toggle
-                        checked={soundEnabled}
-                        onChange={setSoundEnabled}
-                        label={t('settings.soundEnabled')}
-                        description={t('settings.soundEnabledDesc')}
-                    />
-                </SettingCard>
-                <SettingCard title={t('settings.notificationSettings')} icon={Bell}>
-                    <Toggle
-                        checked={enableNotification}
-                        onChange={setEnableNotification}
-                        label={t('settings.enableNotification')}
-                        description={t('settings.enableNotificationDesc')}
-                    />
-                    <Toggle
-                        checked={soundEnabled}
-                        onChange={setSoundEnabled}
-                        label={t('settings.soundEnabled')}
-                        description={t('settings.soundEnabledDesc')}
-                    />
-                </SettingCard>
-
-
-                <SettingCard title={t('settings.downloadSettings', '下载设置')} icon={Download}>
                     <Input
                         label={t('settings.defaultDownloadPath', '默认下载路径')}
                         value={downloadPath}
@@ -189,6 +162,43 @@ export default function SettingsPage() {  // 不再需要 props
                         ]}
                         description={t('settings.maxConcurrentDesc', '同时下载的任务数量')}
                     />
+                    <SettingItem
+                        label={t('settings.TempFile', '临时文件')}
+                        description={t('settings.fileManagementDesc', '点击查看更多配置选项')}
+                        icon={Hammer}
+                        modalTitle={t('settings.TempFileModalTitle', '临时文件')}
+                    >
+                        <div style={{ color: 'var(--text-primary)' }}>
+                            <p style={{ marginBottom: '16px', color: '#9CA3AF' }}>
+                                {t('settings.TempFileModalDesc', '设置临时文件清理策略')}
+                            </p>
+                            <Slider
+                                label={t('settings.TempFileModalSliderLabel', '临时文件清理策略')}
+                                value={cleanInterval}
+                                onChange={setCleanInterval}
+                                min={0}
+                                max={14}
+                                unit="天"
+                            />
+                            <Slider
+                                label={t('settings.TempFileModalSliderLabel2', '缓存大小限制')}
+                                value={cleanSize}
+                                onChange={setCleanSize}
+                                min={0}
+                                max={10}
+                                unit="GB"
+                                mode="input"
+                            />
+                            <div style={{ marginTop: '24px' }}>
+                                <Toggle
+                                    label={t('settings.TempFileModalToggleLabel', '自动清理临时文件')}
+                                    checked={autoClean}
+                                    onChange={setAutoClean}
+                                    description={t('settings.TempFileModalToggleDesc', '自动清理临时文件和缓存')}
+                                />
+                            </div>
+                        </div>
+                    </SettingItem>
                 </SettingCard>
 
                 {/* ===== 高级设置 ===== */}
@@ -296,12 +306,17 @@ export default function SettingsPage() {  // 不再需要 props
                 {/* ===== 底部保存按钮 ===== */}
                 <div style={{ marginTop: '48px' }}>
                     <Button
-                        label="保存所有设置"
-                        onClick={() => alert('设置已保存！')}
+                        label={t('settings.resetConfig', '重置配置')}
+                        onClick={() => alert(t('settings.resetConfig', '重置配置'))}
                         icon={Save}
-                        variant="primary"
+                        variant="danger"
                         fullWidth
                         size="large"
+                        requireConfirm
+                        confirmTitle="确认重置"
+                        confirmMessage="确定要重置吗？此操作将覆盖原有数据。"
+                        confirmButtonText="重置"
+                        cancelButtonText="取消"
                     />
                 </div>
 

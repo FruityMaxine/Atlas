@@ -45,7 +45,22 @@ export function Modal({
         };
     }, [isOpen, onClose]);
 
-    if (!isOpen) return null;
+    // 动画状态管理
+    const [shouldRender, setShouldRender] = useState(isOpen);
+
+    useEffect(() => {
+        if (isOpen) {
+            setShouldRender(true);
+        } else {
+            // 等待动画结束后再停止渲染
+            const timer = setTimeout(() => setShouldRender(false), 300);
+            return () => clearTimeout(timer);
+        }
+    }, [isOpen]);
+
+    if (!shouldRender) return null;
+
+    const isClosing = !isOpen;
 
     return createPortal(
         <>
@@ -62,7 +77,7 @@ export function Modal({
                     backdropFilter: 'blur(8px)', // 磨砂效果
                     WebkitBackdropFilter: 'blur(8px)', // Safari 支持
                     zIndex: 9998,
-                    animation: 'fadeIn 0.3s ease',
+                    animation: `${isClosing ? 'fadeOut' : 'fadeIn'} 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards`,
                     pointerEvents: 'auto', // 确保可以点击
                 }}
             />
@@ -78,12 +93,12 @@ export function Modal({
                     width: '90%',
                     maxWidth: maxWidth,
                     maxHeight: '85vh',
-                    background: 'var(--bg-secondary)',
+                    background: 'var(--bg-secondary)', // 主体背景：深色模式为极深灰，浅色模式为纯白
                     borderRadius: '16px',
                     boxShadow: 'var(--shadow-lg)',
                     border: '2px solid var(--border-primary)',
                     zIndex: 9999,
-                    animation: 'modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    animation: `${isClosing ? 'modalSlideOut' : 'modalSlideIn'} 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards`,
                     overflow: 'hidden',
                     display: 'flex',
                     flexDirection: 'column',
@@ -97,6 +112,11 @@ export function Modal({
                         to { opacity: 1; }
                     }
                     
+                    @keyframes fadeOut {
+                        from { opacity: 1; }
+                        to { opacity: 0; }
+                    }
+                    
                     @keyframes modalSlideIn {
                         from {
                             opacity: 0;
@@ -105,6 +125,17 @@ export function Modal({
                         to {
                             opacity: 1;
                             transform: translate(-50%, -50%) scale(1);
+                        }
+                    }
+
+                    @keyframes modalSlideOut {
+                        from {
+                            opacity: 1;
+                            transform: translate(-50%, -50%) scale(1);
+                        }
+                        to {
+                            opacity: 0;
+                            transform: translate(-50%, -45%) scale(0.95);
                         }
                     }
                 `}</style>
@@ -116,7 +147,7 @@ export function Modal({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    background: 'var(--bg-card)',
+                    background: 'var(--bg-card)', // 浅色模式下为浅灰，深色模式为中深灰
                 }}>
                     <h2 style={{
                         fontSize: '20px',
@@ -165,6 +196,7 @@ export function Modal({
                     padding: '28px',
                     overflowY: 'auto',
                     flex: 1,
+                    background: 'var(--bg-primary)', // 改为主背景色，深色模式为深灰 #18181B
                 }}>
                     {children}
                 </div>

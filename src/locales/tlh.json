@@ -32,7 +32,7 @@
         "autoStart": "tagh",
         "silentStart": "tam tagh",
         "silentStartDesc": "Hach 'e' mev",
-        "notificationSettings": "gvu'",
+        "BasicSettings": "gvu'",
         "enableNotification": "gvu' chaw'",
         "enableNotificationDesc": "Qu' De' 'ej Pat gvu'",
         "soundEnabled": "jabbI'ID wab",

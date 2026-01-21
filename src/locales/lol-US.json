@@ -32,7 +32,7 @@
         "autoStart": "START WEN ON",
         "silentStart": "SNEAKY START",
         "silentStartDesc": "SHHHH NO WINDOH",
-        "notificationSettings": "PINGZ",
+        "BasicSettings": "PINGZ",
         "enableNotification": "CAN HAS PING?",
         "enableNotificationDesc": "TELL ME WEN DUN",
         "soundEnabled": "NOYZ",
