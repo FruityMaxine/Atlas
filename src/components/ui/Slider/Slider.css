@@ -1,0 +1,189 @@
+/* =============================================================================
+   Slider 组件样式表
+   
+   Original Source: src/components/ui/Slider/Slider.tsx (Inline Styles)
+   ============================================================================= */
+
+/* ============ 容器与标签 ============ */
+.atlas-slider-container {
+    /* padding 和 border-bottom 由 JS 根据 label 是否存在控制，这里保留基础样式 */
+    border-bottom: 1px solid var(--border-secondary);
+}
+
+.atlas-slider-container.no-label {
+    padding: 0;
+    border-bottom: none;
+}
+
+.atlas-slider-container.has-label {
+    padding: 16px 20px;
+}
+
+.atlas-slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.atlas-slider-label {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.atlas-slider-value {
+    font-size: 14px;
+    color: var(--accent-primary);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
+}
+
+.atlas-slider-value.dragging {
+    transform: scale(1.08);
+}
+
+.atlas-slider-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+/* ============ 主容器区域 (Wrapper) ============ */
+.atlas-slider-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.atlas-slider-wrapper.has-input {
+    gap: 16px;
+}
+
+/* ============ 滑动条区域 (Track Area) ============ */
+.atlas-slider-track-container {
+    position: relative;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    /* width 和 flex 由 JS 根据 mode 动态控制 */
+}
+
+/* 轨道背景 */
+.atlas-slider-track-bg {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: var(--bg-card-hover);
+    border-radius: 2px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 已填充部分 (Fill) */
+/* 宽度由 JS 动态计算 */
+.atlas-slider-fill {
+    position: absolute;
+    /* height 动态变化 */
+    background: var(--accent-primary);
+    border-radius: 2.5px;
+    /* transition 和 boxShadow 根据状态不同，由 class 控制 */
+}
+
+.atlas-slider-fill.default {
+    height: 4px;
+    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1), height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+}
+
+.atlas-slider-fill.hover {
+    height: 5px;
+    box-shadow: 0 0 8px var(--accent-light);
+}
+
+.atlas-slider-fill.dragging {
+    height: 5px;
+    transition: height 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 16px var(--accent-light), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 原生 Input Range (Hidden) */
+.atlas-slider-native-input {
+    position: absolute;
+    width: 100%;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 2;
+}
+
+/* 滑块手柄 (Handle/Thumb) */
+/* left 由 JS 动态计算 */
+.atlas-slider-thumb {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: var(--bg-secondary);
+    border-radius: 9px;
+    border: 3px solid var(--accent-primary);
+    /* transform, boxShadow, transition 根据状态不同，由 class 控制 */
+    z-index: 1;
+}
+
+.atlas-slider-thumb.default {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
+}
+
+.atlas-slider-thumb.hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 3px var(--accent-light);
+    transform: scale(1.1);
+}
+
+.atlas-slider-thumb.dragging {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), 0 0 0 4px var(--accent-light);
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.25);
+}
+
+/* ============ 输入框模式 (Input Mode) ============ */
+.atlas-slider-input-wrapper {
+    position: relative;
+    width: 100px;
+    flex-shrink: 0;
+}
+
+.atlas-slider-number-input {
+    width: 100%;
+    height: 36px;
+    /* padding 由 JS 动态控制 */
+    font-size: 14px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 2px solid var(--border-primary);
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+}
+
+.atlas-slider-number-input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.atlas-slider-input-unit {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: var(--text-secondary);
+    pointer-events: none;
+    font-weight: 500;
+}

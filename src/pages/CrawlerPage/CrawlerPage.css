@@ -1,0 +1,170 @@
+/* =============================================================================
+   CrawlerPage 组件样式表
+   
+   Original Definitions: src/pages/CrawlerPage.tsx (Inline Styles)
+   ============================================================================= */
+
+/* Page Container */
+.crawler-container {
+    padding: 60px;
+    max-width: 1200px;
+}
+
+/* Header */
+.crawler-header {
+    margin-bottom: 40px;
+}
+
+.crawler-title {
+    font-size: 42px;
+    margin-bottom: 12px;
+    background: linear-gradient(90deg, #3B82F6, #2563EB);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.crawler-title-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.crawler-description {
+    font-size: 16px;
+    color: #9CA3AF;
+}
+
+/* Stats Grid */
+.crawler-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+    animation-delay: 0.2s;
+    animation-fill-mode: backwards;
+}
+
+/* Stat Card */
+.crawler-stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.crawler-stat-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+}
+
+.crawler-stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.crawler-stat-label {
+    font-size: 14px;
+    color: #9CA3AF;
+}
+
+/* Tasks Section */
+.crawler-tasks-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+/* Task Card */
+.crawler-task-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation-fill-mode: backwards;
+}
+
+.crawler-task-card:hover {
+    transform: translateX(8px);
+    /* Border color handled via JS for dynamic color */
+}
+
+/* Task Header */
+.crawler-task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.crawler-task-name {
+    font-size: 18px;
+    color: #fff;
+}
+
+.crawler-task-status {
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    /* background/color handled inline based on status */
+}
+
+/* Progress Bar */
+.crawler-progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.crawler-progress-bg {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.crawler-progress-fill {
+    height: 100%;
+    transition: width 0.5s ease;
+    /* width/background handled inline */
+}
+
+.crawler-progress-text {
+    font-size: 14px;
+    color: #9CA3AF;
+    min-width: 45px;
+}
+
+/* New Task Button */
+.crawler-new-task-btn {
+    margin-top: 24px;
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #3B82F6, #2563EB);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.crawler-new-task-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+}
+
+.crawler-new-task-btn:active {
+    transform: scale(1);
+    box-shadow: none;
+}

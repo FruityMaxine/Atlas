@@ -1,0 +1,103 @@
+/* =============================================================================
+   Input 组件样式表
+   
+   Original Source: src/components/ui/Input/Input.tsx (Inline Styles)
+   ============================================================================= */
+
+/* ============ 容器 ============ */
+.atlas-input-container {
+    /* padding 和 border-bottom 根据 label 存在与否由 JS 逻辑控制类名实现 */
+    border-bottom: 1px solid var(--border-secondary);
+}
+
+.atlas-input-container.no-label {
+    padding: 0;
+    border-bottom: none;
+}
+
+.atlas-input-container.has-label {
+    padding: 16px 20px;
+}
+
+/* ============ 标签 ============ */
+.atlas-input-label {
+    font-size: 15px;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ============ 描述文本 ============ */
+.atlas-input-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+/* ============ 输入框包裹器 ============ */
+.atlas-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* ============ 核心输入框 ============ */
+.atlas-input-field {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: var(--bg-card-hover);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* 密码框 padding (右侧留出眼睛图标位置) */
+.atlas-input-field.password {
+    padding-right: 40px;
+}
+
+/* 聚焦状态 (JS onFocus 控制 state, 或者直接用 :focus) */
+.atlas-input-field:focus {
+    border-color: var(--accent-primary);
+}
+
+/* ============ 密码切换按钮 ============ */
+.atlas-input-toggle-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    /* disabled 时会被覆盖 */
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    font-size: 18px;
+    transition: color 0.2s ease;
+}
+
+.atlas-input-toggle-btn:hover {
+    color: var(--accent-primary);
+}
+
+.atlas-input-toggle-btn.active {
+    color: var(--accent-primary);
+}
+
+.atlas-input-toggle-btn:disabled,
+.atlas-input-toggle-btn[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.atlas-input-toggle-btn:disabled:hover {
+    color: var(--text-tertiary);
+    /* 禁用时 hover 不变色 */
+}

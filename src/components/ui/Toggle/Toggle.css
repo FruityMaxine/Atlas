@@ -1,0 +1,113 @@
+/* =============================================================================
+   Toggle 组件样式表
+   
+   Original Source: src/components/ui/Toggle/Toggle.tsx (Inline Styles)
+   ============================================================================= */
+
+/* ============ 容器与标签 ============ */
+.atlas-toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding 和 border-bottom 由 JS 根据 label 是否存在动态控制类名 */
+    transition: opacity 0.3s ease;
+}
+
+.atlas-toggle-container.has-label {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-secondary);
+}
+
+.atlas-toggle-container.no-label {
+    padding: 0;
+    border-bottom: none;
+}
+
+.atlas-toggle-container.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.atlas-toggle-label {
+    font-size: 15px;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.atlas-toggle-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* ============ 开关轨道 (Track) ============ */
+.atlas-toggle-track {
+    width: 48px;
+    height: 26px;
+    border: 2px solid var(--border-primary);
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    margin-left: 0;
+    /* JS logic: label ? '16px' : '0' -> CSS logic: .has-label .track { margin-left: 16px } */
+    background: var(--bg-card-hover);
+    /* Default unchecked */
+    transform: scale(1);
+    box-shadow: none;
+}
+
+.atlas-toggle-container.has-label .atlas-toggle-track {
+    margin-left: 16px;
+}
+
+.atlas-toggle-track.checked {
+    background: var(--accent-primary);
+}
+
+.atlas-toggle-track.disabled {
+    cursor: not-allowed;
+}
+
+/* Hover Effects */
+.atlas-toggle-track:hover {
+    transform: scale(1.05);
+}
+
+/* Unchecked Hover Shadow */
+.atlas-toggle-track:not(.checked):hover {
+    box-shadow: 0 0 0 3px var(--border-primary);
+}
+
+/* Checked Hover Shadow */
+.atlas-toggle-track.checked:hover {
+    box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+/* Disable hover effects when disabled */
+.atlas-toggle-track.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* ============ 开关滑块 (Thumb) ============ */
+.atlas-toggle-thumb {
+    width: 20px;
+    height: 20px;
+    background: #FFFFFF;
+    border-radius: 11px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+
+    /* Unchecked position */
+    left: 2px;
+}
+
+.atlas-toggle-thumb.checked {
+    /* Checked position */
+    left: 23px;
+    box-shadow: 0 3px 8px rgba(59, 130, 246, 0.4);
+}

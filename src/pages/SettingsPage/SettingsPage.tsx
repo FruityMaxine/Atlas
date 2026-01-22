@@ -3,7 +3,7 @@
  */
 
 
-import { Settings, Bell, Download, Save, Folder, FolderOpen, Hammer, RefreshCw, Plug, AlertCircle, XCircle, Info } from 'lucide-react';
+import { Settings, Bell, Save, Folder, FolderOpen, Hammer, RefreshCw, Plug, AlertCircle, XCircle, Info } from 'lucide-react';
 import {
     Toggle,
     Input,
@@ -13,10 +13,11 @@ import {
     SegmentedControl,
     SettingCard,
     SettingItem
-} from '../components/ui';
-import { useTheme } from '../hooks/useTheme';
-import { useSettings } from '../contexts/SettingsContext';  // 导入 useSettings Hook
+} from '../../components/ui';
+import { useTheme } from '../../hooks/useTheme';
+import { useSettings } from '../../contexts/SettingsContext';  // 导入 useSettings Hook
 import { useTranslation } from 'react-i18next';  // 导入 useTranslation Hook
+import './SettingsPage.css';
 
 export default function SettingsPage() {  // 不再需要 props
     // ===== 主题管理 =====
@@ -51,37 +52,20 @@ export default function SettingsPage() {  // 不再需要 props
 
 
     return (
-        <div style={{
-            padding: '60px',
-            maxWidth: '1400px',
-            margin: '0 auto',
-        }}>
+        <div className="settings-container">
             {/* ===== 页面标题 ===== */}
-            <div style={{ marginBottom: '48px' }}>
-                <h1 style={{
-                    fontSize: '48px',
-                    marginBottom: '12px',
-                    background: 'var(--text-primary)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    fontWeight: '700',
-                }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div className="settings-header">
+                <h1 className="settings-title">
+                    <div className="settings-title-content">
                         <Settings size={48} />
                         {t('settings.title', '系统设置')}
                     </div>
                 </h1>
-                <p style={{
-                    fontSize: '16px',
-                    color: '#9CA3AF',
-                }}>
+                <p className="settings-description">
                     {t('settings.description', '自定义您的工作环境和偏好设置')}
                 </p>
             </div>
-            <div style={{
-                columns: '350px 3',           // 两列
-                columnGap: '12px',        // 列间距
-            }}>
+            <div className="settings-masonry-layout">
 
                 {/* ===== 系统设置 ===== */}
                 <SettingCard title={t('settings.systemSettings', '系统设置')} icon={Settings}>
@@ -168,8 +152,8 @@ export default function SettingsPage() {  // 不再需要 props
                         icon={Hammer}
                         modalTitle={t('settings.TempFileModalTitle', '临时文件')}
                     >
-                        <div style={{ color: 'var(--text-primary)' }}>
-                            <p style={{ marginBottom: '16px', color: '#9CA3AF' }}>
+                        <div className="settings-temp-modal-content">
+                            <p className="settings-temp-modal-desc">
                                 {t('settings.TempFileModalDesc', '设置临时文件清理策略')}
                             </p>
                             <Slider
@@ -189,7 +173,7 @@ export default function SettingsPage() {  // 不再需要 props
                                 unit="GB"
                                 mode="input"
                             />
-                            <div style={{ marginTop: '24px' }}>
+                            <div className="settings-temp-modal-toggle-wrapper">
                                 <Toggle
                                     label={t('settings.TempFileModalToggleLabel', '自动清理临时文件')}
                                     checked={autoClean}
@@ -222,7 +206,7 @@ export default function SettingsPage() {  // 不再需要 props
                         ]}
                         description={t('settings.backupIntervalDesc', '自动备份的间隔时间')}
                     />
-                    <div style={{ padding: '16px 20px' }}>
+                    <div className="settings-backup-btn-wrapper">
                         <Button
                             label={t('settings.backupNow', '立即备份')}
                             onClick={() => alert(t('settings.backupNow', '立即备份'))}
@@ -240,8 +224,8 @@ export default function SettingsPage() {  // 不再需要 props
                         onChange={() => { }}
                         description={t('settings.configPathDesc', '存储所有配置文件的目录')}
                     />
-                    <div style={{ padding: '16px 20px', display: 'flex', gap: '12px' }}>
-                        <div style={{ flex: 1 }}>
+                    <div className="settings-config-dir-wrapper">
+                        <div className="settings-flex-1">
                             <Button
                                 label={t('settings.openDirectory', '打开目录')}
                                 onClick={() => alert(t('settings.openDirectory', '打开目录'))}
@@ -250,7 +234,7 @@ export default function SettingsPage() {  // 不再需要 props
                                 fullWidth
                             />
                         </div>
-                        <div style={{ flex: 1 }}>
+                        <div className="settings-flex-1">
                             <Button
                                 label={t('settings.resetConfig', '重置配置')}
                                 onClick={() => confirm(t('settings.resetConfig', '重置配置'))}
@@ -263,12 +247,7 @@ export default function SettingsPage() {  // 不再需要 props
                 </SettingCard>
 
                 {/* ===== 独立按钮组 ===== */}
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '12px',
-                    marginBottom: '20px',
-                }}>
+                <div className="settings-btns-grid">
                     <Button
                         label={t('settings.developerTools', '开发者工具')}
                         onClick={() => alert(t('settings.developerTools', '开发者工具'))}
@@ -283,11 +262,7 @@ export default function SettingsPage() {  // 不再需要 props
                     />
                 </div>
 
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '12px',
-                }}>
+                <div className="settings-btns-grid-no-margin">
                     <Button
                         label={t('settings.forceStopModules', '模块强制停止')}
                         onClick={() => confirm(t('settings.forceStopModules', '模块强制停止'))}
@@ -304,7 +279,7 @@ export default function SettingsPage() {  // 不再需要 props
                 </div>
 
                 {/* ===== 底部保存按钮 ===== */}
-                <div style={{ marginTop: '48px' }}>
+                <div className="settings-bottom-actions">
                     <Button
                         label={t('settings.resetConfig', '重置配置')}
                         onClick={() => alert(t('settings.resetConfig', '重置配置'))}
@@ -328,16 +303,16 @@ export default function SettingsPage() {  // 不再需要 props
                     icon={Info}
                     showCloseButton={false}
                 >
-                    <div style={{ color: 'var(--text-primary)' }}>
-                        <h3 style={{ marginBottom: '20px', textAlign: 'left' }}>Atlas</h3>
-                        <p style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>版本:  <a style={{ color: 'var(--text-primary)' }}>0.2.0</a></p>
-                        <p style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>
-                            许可证:  <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'none' }}>GPL-3.0</a>
+                    <div className="settings-about-content">
+                        <h3 className="settings-about-title">Atlas</h3>
+                        <p className="settings-about-text">版本:  <a className="settings-about-link">0.2.0</a></p>
+                        <p className="settings-about-text">
+                            许可证:  <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer" className="settings-about-link">GPL-3.0</a>
                         </p>
-                        <p style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>
-                            作者:  <a href="https://github.com/FruityMaxine" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'none' }}>FrutyMaxine</a>
+                        <p className="settings-about-text">
+                            作者:  <a href="https://github.com/FruityMaxine" target="_blank" rel="noopener noreferrer" className="settings-about-link">FrutyMaxine</a>
                         </p>
-                        <div style={{ marginTop: '24px' }}>
+                        <div className="settings-about-check-update">
                             <Button
                                 label="检查更新"
                                 onClick={() => alert('检查更新中...')}

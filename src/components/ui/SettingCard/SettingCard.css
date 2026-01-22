@@ -1,0 +1,40 @@
+/* =============================================================================
+   SettingCard 组件样式表
+   
+   Original Source: src/components/ui/SettingCard/SettingCard.tsx (Inline Styles)
+   ============================================================================= */
+
+/* ============ 卡片容器 ============ */
+.atlas-setting-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-primary);
+    overflow: hidden;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-md);
+
+    /* 布局属性 */
+    break-inside: avoid;
+    /* 防止卡片被截断到两列 */
+    display: inline-block;
+    /* 配合 break-inside */
+    width: 100%;
+    /* 占满列宽 */
+}
+
+/* ============ 卡片标题栏 ============ */
+.atlas-setting-card-header {
+    padding: 16px 20px;
+    background: var(--bg-card-hover);
+    border-bottom: 1px solid var(--border-primary);
+}
+
+/* ============ 卡片标题文本 ============ */
+.atlas-setting-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

@@ -15,15 +15,15 @@
 import { useState } from 'react';
 import { Download, Wrench } from 'lucide-react';
 import { Sidebar } from './components/layout';
-import TargetCursor from './components/ui/TargetCursor';
+import TargetCursor from './components/ui/TargetCursor/TargetCursor';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';  // 导入 useSettings
 import { ToastProvider } from './contexts/ToastContext';
 
 // 导入页面组件
-import HomePage from './pages/HomePage';
-import SettingsPage from './pages/SettingsPage';
-import CrawlerPage from './pages/CrawlerPage';
-import ComponentShowcasePage from './pages/ComponentShowcasePage';
+import HomePage from './pages/HomePage/HomePage';
+import SettingsPage from './pages/SettingsPage/SettingsPage';
+import CrawlerPage from './pages/CrawlerPage/CrawlerPage';
+import ComponentShowcasePage from './pages/ComponentShowcasePage/ComponentShowcasePage';
 
 // \u628aApp\u7684\u5185\u5bb9\u63d0\u53d6\u5230\u5355\u72ec\u7684\u7ec4\u4ef6\uff0c\u8fd9\u6837\u624d\u80fd\u4f7f\u7528useSettings
 function AppContent() {

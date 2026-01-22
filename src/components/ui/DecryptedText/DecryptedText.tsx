@@ -8,23 +8,7 @@
 
 import { useEffect, useState, useRef, useImperativeHandle, forwardRef } from 'react';
 import { motion, HTMLMotionProps } from 'motion/react';
-
-const styles = {
-    wrapper: {
-        display: 'inline-block',
-        whiteSpace: 'pre-wrap' as const
-    },
-    srOnly: {
-        position: 'absolute' as const,
-        width: '1px',
-        height: '1px',
-        padding: 0,
-        margin: '-1px',
-        overflow: 'hidden',
-        clip: 'rect(0,0,0,0)',
-        border: 0
-    }
-};
+import './DecryptedText.css';
 
 interface DecryptedTextProps extends HTMLMotionProps<'span'> {
     /** 要显示的文本内容 */
@@ -273,8 +257,13 @@ const DecryptedText = forwardRef<DecryptedTextHandle, DecryptedTextProps>(({
             : {};
 
     return (
-        <motion.span className={parentClassName} ref={containerRef} style={styles.wrapper} {...hoverProps} {...props}>
-            <span style={styles.srOnly}>{displayText}</span>
+        <motion.span
+            className={`atlas-decrypted-wrapper ${parentClassName}`}
+            ref={containerRef}
+            {...hoverProps}
+            {...props}
+        >
+            <span className="atlas-decrypted-sr-only">{displayText}</span>
 
             <span aria-hidden="true">
                 {displayText.split('').map((char, index) => {

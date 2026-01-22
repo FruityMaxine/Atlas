@@ -1,0 +1,154 @@
+/* =============================================================================
+   ComponentShowcasePage 组件样式表
+   
+   Original Definitions: src/pages/ComponentShowcasePage.tsx (Inline Styles)
+   ============================================================================= */
+
+/* 页面容器 */
+.showcase-container {
+    padding: 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 标题区域 */
+.showcase-title {
+    font-size: 48px;
+    margin-bottom: 16px;
+    background: var(--text-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.showcase-title-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.showcase-description {
+    font-size: 16px;
+    color: #9CA3AF;
+    margin-bottom: 40px;
+}
+
+/* 瀑布流/多列布局 */
+.showcase-masonry-layout {
+    columns: 350px 3;
+    column-gap: 24px;
+}
+
+/* DecryptedText 演示区域 */
+.showcase-decrypt-text-p {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    line-height: 1.8;
+    letter-spacing: 4px;
+    text-indent: 0em;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    border-left: 4px solid var(--primary);
+    padding-left: 12px;
+}
+
+.showcase-decrypt-controls {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.showcase-decrypt-input-wrapper {
+    flex: 1;
+}
+
+.showcase-decrypt-btn-wrapper {
+    margin-bottom: 16px;
+    margin-right: 20px;
+}
+
+/* 通用内边距容器 */
+.showcase-padded-content {
+    padding: 16px 20px;
+}
+
+/* Section Subtitles (h3) */
+.showcase-section-subtitle {
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+/* Button Grids */
+.showcase-btns-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.showcase-btns-flex-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    align-items: center;
+}
+
+.showcase-btns-flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Toast Section */
+.showcase-toast-intro {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.showcase-toast-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.showcase-toast-long-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+}
+
+/* Modal Content */
+.showcase-modal-content {
+    color: var(--text-primary);
+}
+
+.showcase-modal-desc {
+    margin-bottom: 16px;
+    color: #9CA3AF;
+}
+
+.showcase-modal-save-wrapper {
+    margin-top: 24px;
+}
+
+/* About Section */
+.showcase-about-title {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.showcase-about-text {
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.showcase-about-link {
+    color: var(--text-primary);
+    text-decoration: none;
+}

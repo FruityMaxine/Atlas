@@ -1,0 +1,208 @@
+/* =============================================================================
+   Select 组件样式表
+   
+   Original Source: src/components/ui/Select/Select.tsx (Inline Styles)
+   ============================================================================= */
+
+/* ============ 组件变量定义 ============ */
+:root {
+    /* 默认深色模式 */
+    /* 下拉菜单背景 - 带透明度以支持毛玻璃 */
+    --dropdown-bg: rgba(39, 39, 42, 0.85);
+    /* dark: zinc-800 with alpha */
+
+    /* 选项状态颜色 */
+    --dropdown-option-selected: var(--accent-light);
+    --dropdown-option-hover: var(--bg-card-hover);
+}
+
+[data-theme="light"] {
+    /* 浅色模式 */
+    --dropdown-bg: rgba(255, 255, 255, 0.9);
+}
+
+/* ============ 容器与标签 ============ */
+.atlas-select-container {
+    /* padding 由 JS 根据 label 是否存在控制，这里保留基础样式 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.atlas-select-container.no-label {
+    padding: 0;
+    border-bottom: none;
+}
+
+.atlas-select-container.has-label {
+    padding: 16px 20px;
+}
+
+[data-theme="light"] .atlas-select-container {
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+.atlas-select-label {
+    font-size: 15px;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.atlas-select-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.atlas-select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* ============ 主按钮 (Trigger) ============ */
+.atlas-select-trigger {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    color: var(--text-primary);
+    /* cursor: pointer/not-allowed 在 disabled 属性中自动处理，这里设默认 */
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+
+    /* 默认状态 */
+    background: var(--bg-card-hover);
+    border: 2px solid var(--border-primary);
+}
+
+/* 打开状态 */
+.atlas-select-trigger.open {
+    background: var(--accent-light);
+    border-color: var(--accent-primary);
+}
+
+/* 禁用状态 */
+.atlas-select-trigger:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.atlas-select-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.atlas-select-arrow {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    transition: transform 0.3s ease, color 0.2s ease;
+    transform: rotate(0deg);
+}
+
+.atlas-select-trigger.open .atlas-select-arrow {
+    color: var(--accent-primary);
+    transform: rotate(180deg);
+}
+
+/* ============ 下拉菜单 (Dropdown - Portal) ============ */
+.atlas-select-dropdown {
+    position: fixed;
+    /* top, left, width 由 JS 动态计算 */
+
+    background: var(--dropdown-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 9999;
+    box-shadow: var(--shadow-lg);
+    max-height: 280px;
+    overflow-y: auto;
+    /* 必须显式开启以应用滚动条样式 */
+
+    animation: selectDropdown 0.2s ease-out;
+}
+
+/* 动画定义 */
+@keyframes selectDropdown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 自定义滚动条 */
+.atlas-select-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.atlas-select-dropdown::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.atlas-select-dropdown::-webkit-scrollbar-thumb {
+    background: var(--text-tertiary);
+    border-radius: 3px;
+}
+
+.atlas-select-dropdown::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* ============ 选项 (Options) ============ */
+.atlas-select-option {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 14px;
+    background: transparent;
+    border: none;
+    /* border-top 由 first-child 控制 */
+    border-top: 1px solid var(--border-secondary);
+
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    transition: all 0.15s ease;
+    font-weight: 400;
+}
+
+.atlas-select-option:first-child {
+    border-top: none;
+}
+
+/* 悬停状态 (由 :hover 处理，无需 JS) */
+.atlas-select-option:hover {
+    background: var(--dropdown-option-hover);
+}
+
+/* 选中状态 */
+.atlas-select-option.selected {
+    background: var(--dropdown-option-selected);
+    font-weight: 600;
+}
+
+.atlas-select-option-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.atlas-select-check {
+    font-size: 16px;
+    color: var(--accent-primary);
+}

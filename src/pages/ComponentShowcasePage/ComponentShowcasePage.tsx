@@ -5,7 +5,7 @@
  */
 
 import { useState, useRef } from 'react';
-import { Palette, ToggleRight, ClipboardList, Sliders, Circle, Save, Trash2, Settings, Hammer, Globe, Info, Keyboard, Text, RefreshCw } from 'lucide-react';
+import { Palette, ToggleRight, ClipboardList, Sliders, Circle, Save, Trash2, Settings, Hammer, Globe, Info, Keyboard, Text, RefreshCw, Bell } from 'lucide-react';
 import {
     Toggle,
     Input,
@@ -16,7 +16,9 @@ import {
     SettingCard,
     SettingItem,
     DecryptedText
-} from '../components/ui';
+} from '../../components/ui';
+import { useToast } from '../../contexts/ToastContext';
+import './ComponentShowcasePage.css';
 
 function ComponentShowcasePage() {
     // 状态
@@ -44,37 +46,23 @@ function ComponentShowcasePage() {
     // DecryptedText Ref
     const decryptedTextRef = useRef<any>(null);
 
+    // Toast Context
+    const { showToast } = useToast();
+
     return (
-        <div style={{
-            padding: '60px',
-            maxWidth: '1400px',  // 增加最大宽度以容纳两列
-            margin: '0 auto',
-        }}>
-            <h1 style={{
-                fontSize: '48px',
-                marginBottom: '16px',
-                background: 'var(--text-primary)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-            }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div className="showcase-container">
+            <h1 className="showcase-title">
+                <div className="showcase-title-content">
                     <Palette size={48} />
                     组件演示
                 </div>
             </h1>
-            <p style={{
-                fontSize: '16px',
-                color: '#9CA3AF',
-                marginBottom: '40px',
-            }}>
+            <p className="showcase-description">
                 查看所有可用的UI组件
             </p>
 
             {/* 瀑布流布局 - 左右两列互不干扰 */}
-            <div style={{
-                columns: '350px 3',           // 两列
-                columnGap: '24px',        // 列间距
-            }}>
+            <div className="showcase-masonry-layout">
 
                 {/* Toggle 演示 */}
                 <SettingCard title="Toggle 开关" icon={ToggleRight}>
@@ -186,21 +174,7 @@ function ComponentShowcasePage() {
 
                 {/* DecryptedText 演示 */}
                 <SettingCard title="DecryptedText 解密文本" icon={Text}>
-                    <p style={{
-                        marginLeft: '20px',      // [布局] 左外边距
-                        marginTop: '10px',       // [布局] 上外边距 (段前距)
-                        marginBottom: '10px',    // [布局] 下外边距 (段后距)
-                        textAlign: 'center',       // [排版] 对齐方式: left, center, right, justify
-                        lineHeight: '1.8',       // [排版] 行高 (行间距), 建议 1.5 - 2.0
-                        letterSpacing: '4px',    // [排版] 字间距 (每个字符之间的距离)
-                        textIndent: '0em',       // [排版] 首行缩进 (2个字符宽度)
-                        fontSize: '26px',        // [字体] 字体大小
-                        fontWeight: '700',       // [字体] 字体粗细: 100-900, bold
-                        color: 'var(--text-primary)', // [颜色] 字体颜色
-                        textShadow: '0 0 10px rgba(255,255,255,0.1)', // [特效] 文字光晕
-                        borderLeft: '4px solid var(--primary)', // [装饰] 左侧高亮条
-                        paddingLeft: '12px',     // [布局] 左内边距 (配合borderLeft使用)
-                    }}>
+                    <p className="showcase-decrypt-text-p">
                         <DecryptedText
                             ref={decryptedTextRef}
                             text={decryptedText || 'Atlas'}
@@ -212,8 +186,8 @@ function ComponentShowcasePage() {
                             startDelay={decryptedTextDelay}         // 延迟 1 秒后开始解密
                         />
                     </p>
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-end' }}>
-                        <div style={{ flex: 1 }}>
+                    <div className="showcase-decrypt-controls">
+                        <div className="showcase-decrypt-input-wrapper">
                             <Input
                                 label="文本输入"
                                 value={decryptedText}
@@ -221,7 +195,7 @@ function ComponentShowcasePage() {
                                 placeholder="Atlas"
                             />
                         </div>
-                        <div style={{ marginBottom: '16px', marginRight: '20px' }}>
+                        <div className="showcase-decrypt-btn-wrapper">
                             <Button
                                 label="重置动画"
                                 onClick={() => decryptedTextRef.current?.replay()}
@@ -265,36 +239,36 @@ function ComponentShowcasePage() {
 
                 {/* Button 演示 */}
                 <SettingCard title="Button 按钮" icon={Circle}>
-                    <div style={{ padding: '16px 20px' }}>
-                        <h3 style={{ color: 'var(--text-primary)', marginBottom: '16px', fontSize: '14px' }}>
+                    <div className="showcase-padded-content">
+                        <h3 className="showcase-section-subtitle">
                             按钮类型
                         </h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
+                        <div className="showcase-btns-grid-2">
                             <Button label="主要操作" onClick={() => alert('Primary')} variant="primary" />
                             <Button label="危险操作" onClick={() => alert('Danger')} variant="danger" />
                         </div>
 
-                        <h3 style={{ color: 'var(--text-primary)', marginBottom: '16px', fontSize: '14px' }}>
+                        <h3 className="showcase-section-subtitle">
                             尺寸
                         </h3>
-                        <div style={{ display: 'flex', gap: '12px', marginBottom: '24px', alignItems: 'center' }}>
+                        <div className="showcase-btns-flex-row">
                             <Button label="小" onClick={() => { }} size="small" />
                             <Button label="中" onClick={() => { }} size="medium" />
                             <Button label="大" onClick={() => { }} size="large" />
                         </div>
 
-                        <h3 style={{ color: 'var(--text-primary)', marginBottom: '16px', fontSize: '14px' }}>
+                        <h3 className="showcase-section-subtitle">
                             带图标
                         </h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
+                        <div className="showcase-btns-grid-2">
                             <Button label="保存" onClick={() => { }} icon={Save} variant="primary" />
                             <Button label="删除" onClick={() => { }} icon={Trash2} variant="danger" />
                         </div>
 
-                        <h3 style={{ color: 'var(--text-primary)', marginBottom: '16px', fontSize: '14px' }}>
+                        <h3 className="showcase-section-subtitle">
                             二次确认功能 ⭐
                         </h3>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <div className="showcase-btns-flex-col">
                             <Button
                                 label="保存更改"
                                 onClick={() => alert('已保存！')}
@@ -321,6 +295,48 @@ function ComponentShowcasePage() {
                     </div>
                 </SettingCard>
 
+                {/* Toast 演示 */}
+                <SettingCard title="Toast 全局通知" icon={Bell}>
+                    <div className="showcase-padded-content">
+                        <p className="showcase-toast-intro">
+                            点击按钮触发不同类型的全局通知。通知会自动堆叠并在一定时间后消失。
+                        </p>
+                        <div className="showcase-toast-grid">
+                            <Button
+                                label="成功通知"
+                                onClick={() => showToast('操作成功！已保存更改。', 'success')}
+                                variant="primary"
+                            />
+                            <Button
+                                label="错误警告"
+                                onClick={() => showToast('发生错误！无法连接服务器。', 'error')}
+                                variant="danger"
+                            />
+                            <Button
+                                label="警告信息"
+                                onClick={() => showToast('注意：磁盘空间不足。', 'warning')}
+                            />
+                            <Button
+                                label="普通提示"
+                                onClick={() => showToast('收到一条新消息。', 'info')}
+                            />
+                        </div>
+                        <div className="showcase-toast-long-actions">
+                            <Button
+                                label="长时提示 (5s)"
+                                onClick={() => showToast('这个通知会显示 5 秒钟...', 'info', 5000)}
+                                fullWidth
+                            />
+                            <Button
+                                label="可点击通知"
+                                onClick={() => showToast('点我试试！我会触发一个点击事件。', 'success', 5000, () => alert('你点击了通知卡片！'))}
+                                variant="primary"
+                                fullWidth
+                            />
+                        </div>
+                    </div>
+                </SettingCard>
+
                 {/* SettingItem with Modal 演示 */}
                 <SettingCard title="SettingItem 设置项" icon={Settings}>
                     <SettingItem
@@ -329,8 +345,8 @@ function ComponentShowcasePage() {
                         icon={Hammer}
                         modalTitle="高级配置设置"
                     >
-                        <div style={{ color: 'var(--text-primary)' }}>
-                            <p style={{ marginBottom: '16px', color: '#9CA3AF' }}>
+                        <div className="showcase-modal-content">
+                            <p className="showcase-modal-desc">
                                 这是一个 Modal 弹窗示例，可以在这里放任何组件！
                             </p>
                             <Slider
@@ -347,7 +363,7 @@ function ComponentShowcasePage() {
                                 label="自动保存"
                                 description="更改后自动保存设置"
                             />
-                            <div style={{ marginTop: '24px' }}>
+                            <div className="showcase-modal-save-wrapper">
                                 <Button
                                     label="保存设置"
                                     onClick={() => alert(`已保存！音量: ${modalSlider}%, 自动保存: ${modalToggle ? '开启' : '关闭'}`)}
@@ -363,7 +379,7 @@ function ComponentShowcasePage() {
                         description="配置代理和连接选项"
                         icon={Globe}
                     >
-                        <div style={{ color: 'var(--text-primary)' }}>
+                        <div className="showcase-modal-content">
                             <Input
                                 label="代理地址"
                                 value={modalProxy}
@@ -391,16 +407,16 @@ function ComponentShowcasePage() {
                         icon={Info}
                         showCloseButton={false}
                     >
-                        <div style={{ color: 'var(--text-primary)' }}>
-                            <h3 style={{ marginBottom: '20px', textAlign: 'left' }}>Atlas</h3>
-                            <p style={{ color: 'var(--text-primary)', marginBottom: '8px' }}>版本:  <a style={{ color: 'var(--text-primary)' }}>0.2.0</a></p>
-                            <p style={{ color: 'var(--text-primary)', marginBottom: '8px' }}>
-                                许可证:  <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'none' }}>GPL-3.0</a>
+                        <div className="showcase-modal-content">
+                            <h3 className="showcase-about-title">Atlas</h3>
+                            <p className="showcase-about-text">版本:  <a className="showcase-about-link">0.2.0</a></p>
+                            <p className="showcase-about-text">
+                                许可证:  <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer" className="showcase-about-link">GPL-3.0</a>
                             </p>
-                            <p style={{ color: 'var(--text-primary)', marginBottom: '8px' }}>
-                                作者:  <a href="https://github.com/FruityMaxine" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'none' }}>FrutyMaxine</a>
+                            <p className="showcase-about-text">
+                                作者:  <a href="https://github.com/FruityMaxine" target="_blank" rel="noopener noreferrer" className="showcase-about-link">FrutyMaxine</a>
                             </p>
-                            <div style={{ marginTop: '24px' }}>
+                            <div className="showcase-modal-save-wrapper">
                                 <Button
                                     label="检查更新"
                                     onClick={() => alert('检查更新中...')}

@@ -1,2 +1,2 @@
-export { default as Sidebar } from './Sidebar';
+export { default as Sidebar } from './Sidebar/Sidebar';
 // Layout.tsx 暂未实现，待开发后再导出

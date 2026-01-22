@@ -1,0 +1,148 @@
+/* =============================================================================
+   HomePage 组件样式表
+   
+   Original Definitions: src/pages/HomePage.tsx (Inline Styles)
+   ============================================================================= */
+
+/* 页面容器 */
+.homepage-container {
+    padding: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Hero 区域 */
+.homepage-hero {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+/* 主要大标题 */
+.homepage-title {
+    font-size: 56px;
+    margin-bottom: 24px;
+    background: linear-gradient(130deg, #5a98fcff, #4900f3ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* 副标题 */
+.homepage-subtitle {
+    font-size: 20px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* 开始按钮 */
+.homepage-start-btn {
+    margin-top: 40px;
+    padding: 16px 48px;
+    font-size: 18px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+}
+
+.homepage-start-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.6);
+}
+
+.homepage-start-btn:active {
+    /* 按下：向下位移，并产生挤压缩放效果 */
+    transform: translateY(2px) scale(0.96, 0.9);
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2);
+}
+
+/* 功能卡片网格 */
+.homepage-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* 功能卡片 - 基础样式 */
+.homepage-feature-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation-fill-mode: backwards;
+}
+
+/* 即使 Hover 状态的颜色是动态的，我们可以在这里定义默认的 Hover 行为（如果需要），
+   但由于 JS 控制了具体的颜色阴影，CSS 中仅保留 reset 样式 */
+.homepage-feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.homepage-feature-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.homepage-feature-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+    /* color: dynamic via inline style */
+}
+
+.homepage-feature-desc {
+    font-size: 16px;
+    color: #9CA3AF;
+    line-height: 1.6;
+}
+
+/* 统计数据网格 */
+.homepage-stats-grid {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    text-align: center;
+    animation-delay: 0.5s;
+    animation-fill-mode: backwards;
+}
+
+.homepage-stat-container {
+    /* container for each stat item */
+    position: relative;
+}
+
+.homepage-stat-value {
+    font-size: 48px;
+    font-weight: 700;
+    /* color: dynamic via inline style or separate classes if fixed */
+}
+
+.homepage-stat-label {
+    font-size: 16px;
+    color: #9CA3AF;
+    margin-top: 8px;
+}
+
+/* 统计数据颜色辅助类（如果不想用行内样式） */
+.text-blue {
+    color: #3B82F6;
+}
+
+.text-purple {
+    color: #8B5CF6;
+}
+
+.text-green {
+    color: #10B981;
+}

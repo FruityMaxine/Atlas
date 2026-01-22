@@ -1,0 +1,217 @@
+/* =============================================================================
+   Modal 组件样式表 (包含 Modal 和 SettingItem)
+   
+   Original Source: src/components/ui/Modal/Modal.tsx (Inline Styles)
+   ============================================================================= */
+
+/* ============ Modal 动画定义 ============ */
+@keyframes atlasFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes atlasFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes atlasModalSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -45%) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes atlasModalSlideOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, -45%) scale(0.95);
+    }
+}
+
+/* 动画工具类 */
+.animate-fade-in {
+    animation: atlasFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-out {
+    animation: atlasFadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-modal-in {
+    animation: atlasModalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-modal-out {
+    animation: atlasModalSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ============ Modal 背景遮罩 ============ */
+.atlas-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9998;
+    pointer-events: auto;
+}
+
+/* ============ Modal 容器 ============ */
+.atlas-modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    /* maxWidth 由 style 动态设置 */
+    max-height: 85vh;
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    border: 2px solid var(--border-primary);
+    z-index: 9999;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+}
+
+/* ============ Modal 标题栏 ============ */
+.atlas-modal-header {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-card);
+}
+
+.atlas-modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* ============ Modal 关闭按钮 ============ */
+.atlas-modal-close-btn {
+    background: var(--bg-card-hover);
+    border: none;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text-tertiary);
+    transition: all 0.2s ease;
+}
+
+.atlas-modal-close-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #EF4444;
+}
+
+.atlas-modal-close-btn:active {
+    background: var(--bg-card-hover);
+    color: var(--text-tertiary);
+}
+
+/* ============ Modal 内容区域 ============ */
+.atlas-modal-content {
+    padding: 28px;
+    overflow-y: auto;
+    flex: 1;
+    background: var(--bg-primary);
+}
+
+/* =============================================================================
+   SettingItem 组件样式
+   ============================================================================= */
+
+/* ============ SettingItem 容器 ============ */
+.atlas-setting-item {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    background: transparent;
+    position: relative;
+}
+
+.atlas-setting-item:hover {
+    background: var(--bg-card-hover);
+}
+
+/* ============ SettingItem 内容 ============ */
+.atlas-setting-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    transition: transform 0.2s ease;
+}
+
+.atlas-setting-item:hover .atlas-setting-content {
+    transform: translateX(4px);
+}
+
+.atlas-setting-label {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 500;
+    /* marginBottom 由 JS 控制 class 实现 */
+}
+
+.atlas-setting-label.has-desc {
+    margin-bottom: 4px;
+}
+
+.atlas-setting-label.no-desc {
+    margin-bottom: 0;
+}
+
+.atlas-setting-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* ============ SettingItem 箭头 ============ */
+.atlas-setting-arrow {
+    font-size: 20px;
+    color: var(--text-tertiary);
+    transition: transform 0.2s ease;
+}
+
+.atlas-setting-item:hover .atlas-setting-arrow {
+    transform: translateX(4px);
+}

@@ -1,0 +1,109 @@
+/* =============================================================================
+   Toast 组件样式表
+   
+   Original Definitions: src/components/ui/Toast/Toast.tsx (Inline Styles)
+   ============================================================================= */
+
+/* Toast 颜色变量 (Base Variables) */
+:root {
+    --toast-success: #10B981;
+    --toast-error: #EF4444;
+    --toast-warning: #F59E0B;
+    --toast-info: #3B82F6;
+}
+
+[data-theme="light"] {
+    /* Toast 颜色变量（浅色模式）*/
+    --toast-success: #059669;
+    --toast-error: #DC2626;
+    --toast-warning: #D97706;
+    --toast-info: #2563EB;
+}
+
+/* ============ Toast 容器 ============ */
+.atlas-toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: none;
+    /* 允许点击穿透容器空白区域 */
+    justify-content: flex-end;
+}
+
+/* ============ Toast 列表项 ============ */
+.atlas-toast-item {
+    margin-bottom: 12px;
+    width: 356px;
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-primary);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    pointer-events: all;
+    cursor: default;
+    transform-origin: bottom right;
+}
+
+.atlas-toast-item.clickable {
+    cursor: pointer;
+}
+
+/* 图标区域 */
+.atlas-toast-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* 内容区域 */
+.atlas-toast-content {
+    flex: 1;
+}
+
+/* 标题 */
+.atlas-toast-title {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+/* 消息文本 */
+.atlas-toast-message {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* 关闭按钮 */
+.atlas-toast-close-btn {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    margin: -4px;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.atlas-toast-close-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}

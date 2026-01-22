@@ -2,7 +2,7 @@
    Atlas Workbench - 全局样式系统
    ============================================ */
 
-/* ============ 垂直节奏系统（Vertical Rhythm System） ============ */
+/* ============ 垂直节奏系统 ============ */
 /* 
  * 专业解决方案：解决 CJK（中日韩）字体与拉丁字体的垂直度量差异
  * 
@@ -20,7 +20,7 @@
 :root {
     /* ========== 基础度量单位 ========== */
     --base-unit: 8px;
-    /* 基准单位：8px grid */
+    /* 基准单位：8px 网格 */
     --base-font-size: 16px;
     /* 基础字号：16px（1rem）*/
 
@@ -33,7 +33,7 @@
     --line-height-relaxed: 1.75;
     /* 宽松：段落文本 */
 
-    /* ========== 字体大小系统（基于 8px grid）========== */
+    /* ========== 字体大小系统（基于 8px 网格）========== */
     --font-size-xs: 12px;
     /* 0.75rem - 辅助文字 */
     --font-size-sm: 14px;
@@ -51,19 +51,19 @@
     --font-size-4xl: 40px;
     /* 2.5rem - 超大标题 */
 
-    /* ========== 间距系统（基于 8px grid）========== */
+    /* ========== 间距系统（基于 8px 网格）========== */
     --spacing-1: 8px;
-    /* 1 unit */
+    /* 1 个单位 */
     --spacing-2: 16px;
-    /* 2 units */
+    /* 2 个单位 */
     --spacing-3: 24px;
-    /* 3 units */
+    /* 3 个单位 */
     --spacing-4: 32px;
-    /* 4 units */
+    /* 4 个单位 */
     --spacing-5: 40px;
-    /* 5 units */
+    /* 5 个单位 */
     --spacing-6: 48px;
-    /* 6 units */
+    /* 6 个单位 */
 }
 
 /* ============ CSS Reset ============ */
@@ -335,15 +335,6 @@ code {
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-    /* Select 下拉框阴影（深色模式：更深更柔和）*/
-
-    /* Select 下拉框专用变量（深色模式）*/
-    --dropdown-bg: rgba(39, 39, 42, 0.95);
-    /* 下拉框背景：半透明深灰带毛玻璃效果 */
-    --dropdown-option-selected: rgba(255, 255, 255, 0.12);
-    /* 选中选项：半透明白色 */
-    --dropdown-option-hover: rgba(255, 255, 255, 0.06);
-    /* 悬停选项：更淡的半透明白色 */
 }
 
 [data-theme="light"] {
@@ -383,15 +374,7 @@ code {
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    /* Select 下拉框阴影（浅色模式：轻柔）*/
 
-    /* Select 下拉框专用变量（浅色模式）*/
-    --dropdown-bg: rgba(255, 255, 255, 0.98);
-    /* 下拉框背景：接近纯白带毛玻璃效果 */
-    --dropdown-option-selected: #E5E7EB;
-    /* 选中选项：浅灰色 */
-    --dropdown-option-hover: #F3F4F6;
-    /* 悬停选项：更浅的灰色 */
 }
 
 /* 应用主题变量到全局元素 */

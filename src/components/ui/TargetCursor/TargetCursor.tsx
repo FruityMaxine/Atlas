@@ -9,7 +9,7 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
 import './TargetCursor.css';
-import { useSettings } from '../../contexts/SettingsContext';  // 修正路径：向上两级到 src，再进入 contexts
+import { useSettings } from '../../../contexts/SettingsContext';
 
 export interface TargetCursorProps {
     /** 目标元素的 CSS 选择器，默认：'.cursor-target' */
@@ -101,19 +101,31 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
         createSpinTimeline();
 
         const tickerFn = () => {
-            if (!targetCornerPositionsRef.current || !cursorRef.current || !cornersRef.current) {
+            if (!cursorRef.current || !cornersRef.current || !activeTarget) {
                 return;
             }
             const strength = activeStrengthRef.current.current;
             if (strength === 0) return;
+
+            // 重新计算目标位置以支持移动元素（如 Toast）
+            const rect = activeTarget.getBoundingClientRect();
+            const { borderWidth, cornerSize } = constants;
+
+            const currentTargetPositions = [
+                { x: rect.left - borderWidth, y: rect.top - borderWidth },
+                { x: rect.right + borderWidth - cornerSize, y: rect.top - borderWidth },
+                { x: rect.right + borderWidth - cornerSize, y: rect.bottom + borderWidth - cornerSize },
+                { x: rect.left - borderWidth, y: rect.bottom + borderWidth - cornerSize }
+            ];
+
             const cursorX = gsap.getProperty(cursorRef.current, 'x') as number;
             const cursorY = gsap.getProperty(cursorRef.current, 'y') as number;
             const corners = Array.from(cornersRef.current);
             corners.forEach((corner, i) => {
                 const currentX = gsap.getProperty(corner, 'x') as number;
                 const currentY = gsap.getProperty(corner, 'y') as number;
-                const targetX = targetCornerPositionsRef.current![i].x - cursorX;
-                const targetY = targetCornerPositionsRef.current![i].y - cursorY;
+                const targetX = currentTargetPositions[i].x - cursorX;
+                const targetY = currentTargetPositions[i].y - cursorY;
                 const finalX = currentX + (targetX - currentX) * strength;
                 const finalY = currentY + (targetY - currentY) * strength;
                 const duration = strength >= 0.99 ? (parallaxOn ? 0.2 : 0) : 0.05;

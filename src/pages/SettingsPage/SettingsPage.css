@@ -1,0 +1,119 @@
+/* =============================================================================
+   SettingsPage 组件样式表
+   
+   Original Definitions: src/pages/SettingsPage.tsx (Inline Styles)
+   ============================================================================= */
+
+/* 页面容器 */
+.settings-container {
+    padding: 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 页面顶部标题区域 */
+.settings-header {
+    margin-bottom: 48px;
+}
+
+.settings-title {
+    font-size: 48px;
+    margin-bottom: 12px;
+    background: var(--text-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.settings-title-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.settings-description {
+    font-size: 16px;
+    color: #9CA3AF;
+    /* var(--text-secondary) often matches this, but keeping exact hex */
+}
+
+/* 瀑布流/多列布局 */
+.settings-masonry-layout {
+    columns: 350px 3;
+    column-gap: 12px;
+}
+
+/* 临时文件模态框内容 */
+.settings-temp-modal-content {
+    color: var(--text-primary);
+}
+
+.settings-temp-modal-desc {
+    margin-bottom: 16px;
+    color: #9CA3AF;
+}
+
+.settings-temp-modal-toggle-wrapper {
+    margin-top: 24px;
+}
+
+/* 备份设置按钮包裹 */
+.settings-backup-btn-wrapper {
+    padding: 16px 20px;
+}
+
+/* 配置目录按钮组 */
+.settings-config-dir-wrapper {
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+}
+
+.settings-flex-1 {
+    flex: 1;
+}
+
+/* 独立按钮网格 */
+.settings-btns-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.settings-btns-grid-no-margin {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* 底部操作区 */
+.settings-bottom-actions {
+    margin-top: 48px;
+}
+
+/* 关于信息 */
+.settings-about-content {
+    color: var(--text-primary);
+}
+
+.settings-about-title {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.settings-about-text {
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.settings-about-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.settings-about-check-update {
+    margin-top: 24px;
+}

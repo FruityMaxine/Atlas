@@ -1,0 +1,317 @@
+/* =============================================================================
+   Button 组件样式表
+   
+   【数据保真说明】
+   为了确保重构前后 UI 表现 100% 一致，本文件中的数值直接取自原 Button.tsx 的行内样式。
+   虽然部分数值可能不符合全局 design token (如 15px 字号)，但在本阶段优先保证“无损重构”。
+   
+   Original Source: src/components/ui/Button/Button.tsx (Inline Styles)
+   ============================================================================= */
+
+/* ============ 基础样式 ============ */
+.atlas-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    /* 基础动画 */
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.atlas-btn.full-width {
+    width: 100%;
+}
+
+/* ============ 尺寸变体 (Sizes) ============ */
+/* Original: small: { padding: '8px 16px', fontSize: '13px' } */
+.atlas-btn.small {
+    padding: 8px 16px;
+    font-size: 13px;
+}
+
+/* Original: medium: { padding: '12px 24px', fontSize: '15px' } */
+.atlas-btn.medium {
+    padding: 12px 24px;
+    font-size: 15px;
+}
+
+/* Original: large: { padding: '16px 32px', fontSize: '16px' } */
+.atlas-btn.large {
+    padding: 16px 32px;
+    font-size: 16px;
+}
+
+/* ============ 风格变体 (Variants) - Primary ============ */
+.atlas-btn.primary {
+    /* 深色模式默认值 */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.atlas-btn.primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.atlas-btn.primary:active:not(:disabled) {
+    transform: translateY(-1px) scale(1);
+    /* 原代码 mouseUp 逻辑: scale(1) */
+}
+
+/* 注意：原代码 onMouseDown 是 scale(0.98)，onMouseUp 是 scale(1) + translateY(-1px) */
+.atlas-btn.primary:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+}
+
+
+/* 浅色模式适配 - Primary */
+[data-theme="light"] .atlas-btn.primary {
+    background: #FFFFFF;
+    border: none;
+    color: #1F2937;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .atlas-btn.primary:hover:not(:disabled) {
+    background: #FFFFFF;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ============ 风格变体 (Variants) - Danger ============ */
+.atlas-btn.danger {
+    /* 深色模式默认值 */
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.18), rgba(239, 68, 68, 0.12));
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #FFFFFF;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.atlas-btn.danger:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.28), rgba(239, 68, 68, 0.20));
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+    transform: translateY(-1px);
+}
+
+/* 浅色模式适配 - Danger */
+[data-theme="light"] .atlas-btn.danger {
+    background: #FFFFFF;
+    border: none;
+    color: #1F2937;
+    /* 注意：原代码 danger 在 light mode 下也是用这些通用逻辑吗？检查原代码... 
+                     原代码 styles.danger.color 取决于 disabled 或者是 isLightMode ? '#1F2937' : '#FFFFFF'
+                     是的，原代码没有对 danger 的文字颜色做特殊处理，和 primary 一样 */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .atlas-btn.danger:hover:not(:disabled) {
+    background: #FFFFFF;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ============ 禁用状态 (Disabled) ============ */
+.atlas-btn:disabled {
+    background: var(--bg-card);
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+    border: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transform: none !important;
+}
+
+/* ============ 弹窗相关样式 (Confirm Modal) ============ */
+
+/* 遮罩层 */
+.atlas-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9998;
+    pointer-events: auto;
+}
+
+/* 对话框容器 */
+.atlas-confirm-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 450px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    border: 2px solid var(--border-primary);
+    z-index: 9999;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+}
+
+/* 标题栏 */
+.atlas-confirm-header {
+    padding: 24px 28px;
+    background: var(--bg-card);
+}
+
+.atlas-confirm-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* 内容区域 */
+.atlas-confirm-body {
+    padding: 28px;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* 底部按钮栏 */
+.atlas-confirm-footer {
+    padding: 20px 28px;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    background: var(--bg-card);
+}
+
+/* 对话框中的按钮 - Cancel */
+.atlas-confirm-btn-cancel {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    background: var(--bg-card-hover);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.atlas-confirm-btn-cancel:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* 对话框中的按钮 - Confirm */
+.atlas-confirm-btn-confirm {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    /* 默认 Primary */
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.atlas-confirm-btn-confirm:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Confirm Button - Danger Variant */
+.atlas-confirm-btn-confirm.danger {
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.atlas-confirm-btn-confirm.danger:hover {
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* 动画定义提取 */
+@keyframes atlasFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes atlasFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes atlasModalSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -45%) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes atlasModalSlideOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, -45%) scale(0.95);
+    }
+}
+
+/* 动画工具类 */
+.animate-fade-in {
+    animation: atlasFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-out {
+    animation: atlasFadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-modal-in {
+    animation: atlasModalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-modal-out {
+    animation: atlasModalSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}

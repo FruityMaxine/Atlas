@@ -5,6 +5,7 @@
  * 特性：支持自定义大小、颜色和类名
  */
 
+import './Icon.css';
 import { LucideIcon } from 'lucide-react';
 
 interface IconProps {
