@@ -40,6 +40,7 @@ interface SettingsContextType {
     autoClean: boolean;             // 自动清理
     cleanInterval: number;          // 清理间隔（天数）
     cleanSize: number;              // 清理大小（GB）
+    enableComponentPage: boolean;   // 组件页面
     // ===== 设置更新函数 =====
     setMouseAnimation: (value: boolean) => void;  // 修改鼠标动画的函数
     setLanguage: (value: string) => void;   // 修改语言的函数
@@ -54,6 +55,7 @@ interface SettingsContextType {
     setAutoClean: (value: boolean) => void; // 修改自动清理的函数
     setCleanInterval: (value: number) => void; // 修改清理间隔的函数
     setCleanSize: (value: number) => void; // 修改清理大小的函数
+    setEnableComponentPage: (value: boolean) => void; // 修改组件页面的函数
 }
 
 // ===== 2. 创建 Context 对象 =====
@@ -110,6 +112,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     const [cleanInterval, setCleanInterval] = useState(7);  // 默认清理间隔（7天）
     const [cleanSize, setCleanSize] = useState(1);  // 默认清理大小（1GB）
 
+    // 开发者选项
+    const [enableComponentPage, setEnableComponentPage] = useState(false);  // 默认不启用组件页面
+
     // ===== 连接 i18n =====
     /**
      * 当 language 改变时，同步到 i18n
@@ -153,6 +158,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         setCleanInterval,
         cleanSize,
         setCleanSize,
+        enableComponentPage,
+        setEnableComponentPage,
     };
 
     // ===== 返回 Provider 组件 =====

@@ -12,11 +12,11 @@
  * 3. 路由切换逻辑
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Download, Wrench } from 'lucide-react';
 import { Sidebar } from './components/layout';
 import TargetCursor from './components/ui/TargetCursor/TargetCursor';
-import { SettingsProvider, useSettings } from './contexts/SettingsContext';  // 导入 useSettings
+import { SettingsProvider, useSettings } from './contexts/SettingsContext';  // 导入 useSettings 
 import { ToastProvider } from './contexts/ToastContext';
 
 // 导入页面组件
@@ -31,8 +31,15 @@ function AppContent() {
     const [currentPage, setCurrentPage] = useState('home');
     // 注意：mouseAnimation 状态已移到 SettingsContext 中管理
 
-    // 从 Context 获取 mouseAnimation 用于 key prop
-    const { mouseAnimation } = useSettings();
+    // 从 Context 获取设置
+    const { mouseAnimation, enableComponentPage } = useSettings();
+
+    // 自动重定向逻辑：如果组件页面被禁用且当前正处于该页面，则返回首页
+    useEffect(() => {
+        if (!enableComponentPage && currentPage === 'components') {
+            setCurrentPage('home');
+        }
+    }, [enableComponentPage, currentPage]);
 
     // 页面导航处理函数
     const handleNavigate = (pageId: string) => {

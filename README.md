@@ -2,9 +2,9 @@
 
 > 一个具有 ClashVerge 级别 UI 的跨语言模块化桌面应用框架
 
-**版本**: v0.1.0  
+**版本**: v0.2.0  
 **技术栈**: Tauri + React + TypeScript + Rust  
-**开发状态**: 🚧 开发中（Phase 1: React UI 原型）
+**开发状态**: 🚧 开发中 (Phase 2: Rust Backend & 低代码框架)
 **项目名称**: Atlas 而非 Atlas Workbench
 
 ---
@@ -102,7 +102,71 @@ Atlas 启动器（主程序，TypeScript + React）
 - ✅ 后端服务静默启动（无命令行窗口）
 - ✅ 点击模块立即显示对应 UI
 
-### 3. ClashVerge 级别 UI
+### 3. 声明式 UI 框架 (Declarative UI Framework)
+
+**核心决策**：采用 **JSON5** 作为配置格式。
+> **选择理由**：JSON5 支持**注释**和宽松语法（支持尾逗号、单引号），既保留了 JSON 对 Web 开发者的亲和力（直接映射 React Props），又像配置文件一样易读易写。相比 XML，它更契合 React/TypeScript 生态。
+
+**功能规范 (Feature Spec)**：
+
+#### (1) 双模式支持 (Hybrid Mode)
+- **纯声明模式**：仅通过 `layout.json5` 定义界面。
+- **React 专家模式**：允许模块开发者编写 `.tsx` 组件，完全接管界面渲染（类似 Phase 1），甚至可以在 React 代码中调用声明式引擎的部分功能。
+
+#### (2) 标准组件库调用
+通过 `type` 字段直接调用 Atlas 内置的高质量组件：
+```json5
+// layout.json5
+{
+  "type": "input", 
+  "label": "目标网址", 
+  "id": "url",
+  "validation": { "required": true, "regex": "^https?://" } // 增强：验证规则
+}
+```
+
+#### (3) 嵌套与容器 (Nesting)
+支持组件嵌套，构建复杂布局。例如使用 `SettingCard` 包裹多个选项：
+```json5
+{
+  "type": "container",
+  "component": "SettingCard", // 对应 src/components/ui/SettingCard
+  "props": { "title": "网络设置", "icon": "wifi" },
+  "children": [
+    { "type": "toggle", "id": "proxy", "label": "使用代理" },
+    { "type": "input", "id": "port", "label": "端口" } // 自动嵌套在卡片内
+  ]
+}
+```
+
+#### (4) 多页面导航 (Multi-Page Routing)
+支持模块内多页面结构，例如分离“主页”和“设置页”：
+```json5
+{
+  "pages": {
+    "main": { "title": "控制台", "components": [...] },
+    "settings": { "title": "高级配置", "components": [...] }
+  },
+  "entry": "main" // 默认入口
+}
+```
+
+#### (5) 扩展性与自定义 (Extensibility)
+- **组件注册制**：未来 Atlas 升级添加新组件（如 `Chart`），现有的 JSON 渲染器无需修改逻辑即可支持渲染。
+- **模块自定义组件**：
+    - *方式 A (组合)*：模块可以在 JSON 中定义“宏组件”（由基础组件组合而成）。
+    - *方式 B (代码)*：在 React 模式下，模块可以注册自己的 React 组件供 JSON 引用。
+
+#### (6) 开发者必备特性 (Essential Features)
+除了上述功能，框架还将内置以下**关键能力**：
+- **🔍 条件渲染 (Conditional Logic)**：
+  - 例：仅当 `"proxy_enabled": true` 时，才显示 "代理IP" 输入框。
+  - 语法：`"hidden": "!$proxy_enabled"`
+- **🌐 国际化 (i18n)**：JSON 中的字符串支持引用语言包 key，如 `s.module.start_btn`。
+- **🛡️ 自动校验 (Validation)**：输入框自动支持 Min/Max/Regex 校验，并提示错误。
+- **⚡ 事件绑定 (Action Binding)**：按钮点击自动触发后端 Python 函数或页面跳转。
+
+### 4. ClashVerge 级别 UI
 
 **设计风格**：
 - 深色主题优先
@@ -940,8 +1004,8 @@ if __name__ == '__main__':
 | 阶段 | 时间 | 目标 | 状态 |
 |------|------|------|------|
 | **Phase 0** | 第 0 周 | 环境搭建、框架创建 | ✅ 完成 |
-| **Phase 1** | 第 1-4 周 | React UI 基础框架 | 🚧 进行中 |
-| **Phase 2** | 第 5-6 周 | Rust 后端集成 | 📅 计划中 |
+| **Phase 1** | 第 1-4 周 | React UI 基础框架 | ✅ 完成 |
+| **Phase 2** | 第 5-6 周 | Rust 后端集成 & 声明式 UI | � 进行中 |
 | **Phase 3** | 第 7-8 周 | 前后端通信 | 📅 计划中 |
 | **Phase 4** | 第 9-10 周 | UI 美化优化 | 📅 计划中 |
 | **Phase 5** | 第 11-12 周 | 示例模块开发 | 📅 计划中 |

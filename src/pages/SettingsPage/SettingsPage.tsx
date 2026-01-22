@@ -43,6 +43,8 @@ export default function SettingsPage() {  // 不再需要 props
         autoClean, setAutoClean,
         cleanInterval, setCleanInterval,
         cleanSize, setCleanSize,
+        // 开发者选项
+        enableComponentPage, setEnableComponentPage,
     } = useSettings();  // 只调用一次 useSettings()！
 
     // ===== 翻译 Hook =====
@@ -246,22 +248,21 @@ export default function SettingsPage() {  // 不再需要 props
                     </div>
                 </SettingCard>
 
-                {/* ===== 独立按钮组 ===== */}
-                <div className="settings-btns-grid">
-                    <Button
-                        label={t('settings.developerTools', '开发者工具')}
-                        onClick={() => alert(t('settings.developerTools', '开发者工具'))}
-                        variant="primary"
-                        icon={Hammer}
-                    />
-                    <Button
-                        label={t('settings.checkUpdate', '检查更新')}
-                        onClick={() => alert(t('settings.checkUpdate', '检查更新'))}
-                        variant="primary"
-                        icon={RefreshCw}
-                    />
-                </div>
+                {/* ===== 开发者选项 ===== */}
+                <SettingItem
+                label="开发者选项"
+                icon={Hammer}
+                showCloseButton={true}
+                >
+                <Toggle
+                    label="组件页面"
+                    checked={enableComponentPage}
+                    onChange={setEnableComponentPage}
+                    description={t('settings.enableComponentPageDesc', '启用组件页面')}
+                ></Toggle>
 
+                </SettingItem>
+                {/* ===== 独立按钮组 ===== */}
                 <div className="settings-btns-grid-no-margin">
                     <Button
                         label={t('settings.forceStopModules', '模块强制停止')}
