@@ -1,19 +1,20 @@
-/*
- * Atlas - 主程序入口
- * 
- * 功能说明：
- * - Tauri 应用程序的主入口点
- * - 初始化窗口配置
- * - 注册所有 IPC 命令
- * - 启动模块管理器
- * 
- * 主要职责：
- * 1. 创建主窗口
- * 2. 配置窗口属性（标题、大小、主题等）
- * 3. 注册命令处理函数
- * 4. 初始化应用状态
- */
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-// TODO: 实现 main 函数
-// TODO: 配置 Tauri Builder
-// TODO: 注册 IPC 命令
+mod commands;
+mod core;
+mod models;
+
+use core::process_manager::ProcessManager;
+
+fn main() {
+    tauri::Builder::default()
+        // 初始化进程管理器状态，使其在所有 Command 中可访问
+        .manage(ProcessManager::new())
+        // 注册 IPC 命令处理函数
+        .invoke_handler(tauri::generate_handler![
+            commands::launch_module,
+            commands::stop_module
+        ])
+        .run(tauri::generate_context!())
+        .expect("Tauri 应用程序运行失败");
+}
