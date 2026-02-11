@@ -17,6 +17,10 @@ interface InputProps {
     type?: 'text' | 'password' | 'email' | 'number';
     disabled?: boolean;
     maxLength?: number;
+    style?: React.CSSProperties;
+    className?: string;
+    multiline?: boolean;
+    rows?: number;
 }
 
 export default function Input({
@@ -28,6 +32,10 @@ export default function Input({
     type = 'text',
     disabled = false,
     maxLength,
+    style,
+    className = '',
+    multiline = false,
+    rows = 3,
 }: InputProps) {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -36,7 +44,10 @@ export default function Input({
     const isPasswordField = type === 'password';
 
     return (
-        <div className={`atlas-input-container ${label ? 'has-label' : 'no-label'}`}>
+        <div
+            className={`atlas-input-container ${label ? 'has-label' : 'no-label'} ${className}`}
+            style={style}
+        >
             {label && (
                 <label className="atlas-input-label">
                     {label}
@@ -50,15 +61,28 @@ export default function Input({
 
             {/* 输入框容器 */}
             <div className="atlas-input-wrapper">
-                <input
-                    className={`atlas-input-field cursor-target ${isPasswordField ? 'password' : ''}`}
-                    type={actualType}
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                    placeholder={placeholder}
-                    disabled={disabled}
-                    maxLength={maxLength}
-                />
+                {multiline ? (
+                    <textarea
+                        className="atlas-input-field cursor-target"
+                        style={{ resize: 'vertical', minHeight: '80px', fontFamily: 'monospace' }}
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                        placeholder={placeholder}
+                        disabled={disabled}
+                        maxLength={maxLength}
+                        rows={rows}
+                    />
+                ) : (
+                    <input
+                        className={`atlas-input-field cursor-target ${isPasswordField ? 'password' : ''}`}
+                        type={actualType}
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                        placeholder={placeholder}
+                        disabled={disabled}
+                        maxLength={maxLength}
+                    />
+                )}
 
                 {/* 密码显示/隐藏切换按钮 */}
                 {isPasswordField && (

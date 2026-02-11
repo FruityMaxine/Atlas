@@ -1,0 +1,32 @@
+.atlas-text-block {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.atlas-text-hint {
+  margin: 2px 0 14px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px dashed rgba(59, 130, 246, 0.25);
+  background: rgba(59, 130, 246, 0.06);
+  font-size: 13px;
+}
+
+.atlas-text-paragraph {
+  margin: 2px 0 12px;
+  font-size: 14px;
+}
+
+.atlas-text-caption {
+  margin: 2px 0 8px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.atlas-text-section {
+  margin: 6px 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}

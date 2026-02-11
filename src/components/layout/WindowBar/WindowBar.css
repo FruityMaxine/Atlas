@@ -1,0 +1,59 @@
+.atlas-window-bar {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-primary);
+  background:
+    radial-gradient(circle at left, rgba(16, 185, 129, 0.14), transparent 35%),
+    radial-gradient(circle at right, rgba(59, 130, 246, 0.16), transparent 35%),
+    color-mix(in srgb, var(--bg-primary) 92%, transparent);
+  backdrop-filter: blur(10px);
+  padding: 0 8px 0 12px;
+  user-select: none;
+}
+
+.atlas-window-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.atlas-window-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #3b82f6);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.atlas-window-title {
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 0.4px;
+}
+
+.atlas-window-actions {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.atlas-window-btn {
+  width: 44px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.atlas-window-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.atlas-window-close:hover {
+  background: #ef4444;
+  color: #fff;
+}

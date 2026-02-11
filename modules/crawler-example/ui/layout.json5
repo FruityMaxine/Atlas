@@ -1,0 +1,149 @@
+// 网页爬虫模块 - 声明式 UI 配置
+// 此文件定义了完整的用户界面，无需编写 React 代码
+{
+  schema: [
+    // 基础设置容器
+    {
+      type: 'container',
+      label: '基础设置',
+      id: 'basic-settings',
+      props: {
+        icon: 'Settings'
+      },
+      children: [
+        // URL 输入框
+        {
+          type: 'input',
+          id: 'target_url',
+          label: '目标网址',
+          props: {
+            placeholder: '请输入要爬取的网址 (例如: https://example.com)',
+            defaultValue: 'https://example.com',
+            showClear: true,
+            hint: '请输入完整的URL，包括 http:// 或 https://前缀'
+          }
+        },
+        
+        // 深度选择滑块
+        {
+          type: 'slider',
+          id: 'crawl_depth',
+          label: '爬取深度',
+          props: {
+            min: 1,
+            max: 5,
+            defaultValue: 2,
+            unit: '层',
+            hint: '设置爬虫遍历链接的最大深度，数值越大爬取范围越广'
+          }
+        },
+        
+        // 并发数滑块
+        {
+          type: 'slider',
+          id: 'max_workers',
+          label: '最大并发数',
+          props: {
+            min: 1,
+            max: 10,
+            defaultValue: 3,
+            unit: '线程'
+          }
+        }
+      ]
+    },
+    
+    // 高级选项容器
+    {
+      type: 'container',
+      label: '高级选项',
+      id: 'advanced-settings',
+      props: {
+        icon: 'Tune'
+      },
+      children: [
+        // 代理设置开关
+        {
+          type: 'toggle',
+          id: 'use_proxy',
+          label: '使用代理服务器',
+          props: {
+            defaultChecked: false,
+            hint: '启用后将通过代理访问目标网站'
+          }
+        },
+        
+        // JavaScript 渲染开关
+        {
+          type: 'toggle',
+          id: 'enable_js',
+          label: '启用 JavaScript 渲染',
+          props: {
+            defaultChecked: false,
+            hint: '适用于需要执行 JS 的动态网页（性能开销较大）'
+          }
+        },
+        
+        // User-Agent 选择
+        {
+          type: 'select',
+          id: 'user_agent',
+          label: 'User-Agent',
+          props: {
+            options: [
+              { value: 'chrome', label: 'Chrome Browser' },
+              { value: 'firefox', label: 'Firefox Browser' },
+              { value: 'mobile', label: 'Mobile (Android)' },
+              { value: 'custom', label: '自定义' }
+            ],
+            defaultValue: 'chrome'
+          }
+        },
+        
+        // 内容类型分段控制
+        {
+          type: 'segmentedControl',
+          id: 'content_type',
+          label: '抓取内容类型',
+          props: {
+            options: [
+              { value: 'text', label: '文本' },
+              { value: 'images', label: '图片' },
+              { value: 'all', label: '全部' }
+            ],
+            defaultValue: 'text'
+          }
+        }
+      ]
+    },
+    
+    // 操作按钮
+    {
+      type: 'button',
+      id: 'start_crawl',
+      label: '开始爬取',
+      props: {
+        variant: 'primary',
+        onClick: 'start_crawling',  // 调用后端 API
+        fullWidth: true
+      }
+    },
+    
+    // 结果展示区 (Modal)
+    {
+      type: 'modal',
+      id: 'results_modal',
+      label: '查看爬取结果',
+      props: {
+        title: '爬取结果',
+        description: '显示最近一次爬取的详细数据'
+      },
+      children: [
+        {
+          type: 'label',
+          label: '结果将在此处显示（计划未来版本实现动态数据绑定）'
+        }
+      ]
+    }
+  ]
+}

@@ -3,7 +3,7 @@
  */
 
 
-import { Settings, Bell, Save, Folder, FolderOpen, Hammer, RefreshCw, Plug, AlertCircle, XCircle, Info } from 'lucide-react';
+import { Settings, Bell, Save, Folder, FolderOpen, Hammer, Plug, AlertCircle, XCircle, Info } from 'lucide-react';
 import {
     Toggle,
     Input,
@@ -250,16 +250,16 @@ export default function SettingsPage() {  // 不再需要 props
 
                 {/* ===== 开发者选项 ===== */}
                 <SettingItem
-                label="开发者选项"
-                icon={Hammer}
-                showCloseButton={true}
+                    label="开发者选项"
+                    icon={Hammer}
+                    showCloseButton={true}
                 >
-                <Toggle
-                    label="组件页面"
-                    checked={enableComponentPage}
-                    onChange={setEnableComponentPage}
-                    description={t('settings.enableComponentPageDesc', '启用组件页面')}
-                ></Toggle>
+                    <Toggle
+                        label="组件页面"
+                        checked={enableComponentPage}
+                        onChange={setEnableComponentPage}
+                        description={t('settings.enableComponentPageDesc', '启用组件页面')}
+                    ></Toggle>
 
                 </SettingItem>
                 {/* ===== 独立按钮组 ===== */}

@@ -1,0 +1,64 @@
+.atlas-schema-root {
+  --atlas-schema-gap-base: var(--atlas-schema-panel-gap, 14px);
+  --atlas-schema-gap-current: var(--atlas-schema-gap-override, var(--atlas-schema-gap-base));
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--atlas-schema-gap-current);
+  padding-inline: var(--atlas-module-content-padding-inline, 0px);
+  box-sizing: border-box;
+}
+
+.atlas-schema-root.atlas-schema-density-compact {
+  --atlas-schema-gap-override: 10px;
+}
+
+.atlas-schema-root.atlas-schema-density-comfortable {
+  --atlas-schema-gap-override: 18px;
+}
+
+.atlas-schema-root.atlas-schema-tone-elevated .atlas-setting-card {
+  border-color: rgba(59, 130, 246, 0.16);
+  box-shadow:
+    0 10px 28px rgba(2, 6, 23, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.atlas-schema-root .atlas-setting-card {
+  margin-bottom: 0;
+}
+
+.atlas-schema-root .atlas-text-block {
+  margin-inline: 0;
+}
+
+.atlas-schema-root.atlas-schema-scrollbar-slim,
+.atlas-schema-root.atlas-schema-scrollbar-slim * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.85) transparent;
+}
+
+.atlas-schema-root.atlas-schema-scrollbar-slim::-webkit-scrollbar,
+.atlas-schema-root.atlas-schema-scrollbar-slim *::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.atlas-schema-root.atlas-schema-scrollbar-slim::-webkit-scrollbar-track,
+.atlas-schema-root.atlas-schema-scrollbar-slim *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.atlas-schema-root.atlas-schema-scrollbar-slim::-webkit-scrollbar-thumb,
+.atlas-schema-root.atlas-schema-scrollbar-slim *::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.95), rgba(16, 185, 129, 0.9));
+  background-clip: padding-box;
+}
+
+.atlas-schema-root.atlas-schema-scrollbar-slim::-webkit-scrollbar-thumb:hover,
+.atlas-schema-root.atlas-schema-scrollbar-slim *::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(96, 165, 250, 1), rgba(52, 211, 153, 1));
+  background-clip: padding-box;
+}

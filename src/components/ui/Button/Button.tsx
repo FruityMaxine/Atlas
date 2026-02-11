@@ -40,6 +40,10 @@ interface ButtonProps {
     confirmButtonText?: string;
     /** 取消按钮文本（默认"取消"）*/
     cancelButtonText?: string;
+    /** 是否正在加载 */
+    isLoading?: boolean;
+    style?: React.CSSProperties;
+    className?: string;
 }
 
 export default function Button({
@@ -48,6 +52,7 @@ export default function Button({
     variant = 'primary',
     icon,
     disabled = false,
+    isLoading = false,
     fullWidth = false,
     size = 'medium',
     requireConfirm = false,
@@ -55,6 +60,8 @@ export default function Button({
     confirmMessage = '确定要执行此操作吗？',
     confirmButtonText = '确认',
     cancelButtonText = '取消',
+    style,
+    className = '',
 }: ButtonProps) {
     // 确认对话框状态
     const [showConfirm, setShowConfirm] = useState(false);
@@ -73,9 +80,12 @@ export default function Button({
     }, [showConfirm]);
 
     const isClosing = !showConfirm;
+    const isDisabled = disabled || isLoading;
 
     // 点击处理逻辑
     const handleClick = () => {
+        if (isDisabled) return;
+
         if (requireConfirm) {
             setShowConfirm(true); // 显示确认对话框
         } else {
@@ -95,14 +105,19 @@ export default function Button({
     return (
         <>
             <button
-                className={`atlas-btn ${variant} ${size} ${fullWidth ? 'full-width' : ''} cursor-target`}
+                className={`atlas-btn ${variant} ${size} ${fullWidth ? 'full-width' : ''} ${className} cursor-target`}
                 onClick={handleClick}
-                disabled={disabled}
+                disabled={isDisabled}
+                style={style}
             >
-                {icon && (() => {
-                    const IconComponent = icon;
-                    return <IconComponent size={18} />;
-                })()}
+                {isLoading ? (
+                    <div className="atlas-btn-spinner" />
+                ) : (
+                    icon && (() => {
+                        const IconComponent = icon;
+                        return <IconComponent size={18} />;
+                    })()
+                )}
                 {label}
             </button>
 

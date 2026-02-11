@@ -1,0 +1,42 @@
+{
+    "id": "crawler-example",
+    "name": "网页爬虫示例",
+    "version": "1.0.0",
+    "description": "一个声明式 UI 的爬虫模块示例，展示如何无需编写 React 代码即可集成",
+    "author": "Atlas Team",
+    "icon": "icon.png",
+    "backend": {
+        "enabled": true,
+        "language": "python",
+        "entrypoint": "backend/main.py",
+        "args": [
+            "--port",
+            "{PORT}"
+        ],
+        "port": 8080,
+        "healthCheck": "/health"
+    },
+    "ui": {
+        "mode": "declarative",
+        "layout": "ui/layout.json5"
+    },
+    "permissions": {
+        "network": true,
+        "filesystem": {
+            "read": [
+                "downloads/**"
+            ],
+            "write": [
+                "downloads/**",
+                "logs/**"
+            ]
+        }
+    },
+    "settings": {
+        "downloadPath": {
+            "type": "directory",
+            "label": "下载路径",
+            "default": "./downloads"
+        }
+    }
+}
