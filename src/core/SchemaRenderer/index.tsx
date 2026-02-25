@@ -151,6 +151,55 @@ const PollerNode: React.FC<PollerNodeProps> = ({ endpoint, interval, onPoll }) =
   return null;
 };
 
+const ActionInputNode: React.FC<{
+  node: ComponentSchema;
+  storeValue: any;
+  handleChange: (val: any) => void;
+  onAction: (action: string) => Promise<void>;
+}> = ({ node, storeValue, handleChange, onAction }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleBtnClick = async () => {
+    const action = node.props?.actionButton?.onClick;
+    if (!action) return;
+    setLoading(true);
+    try {
+      await onAction(action);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Input
+      {...node.props}
+      label={node.label}
+      description={node.props?.description || node.props?.hint}
+      value={
+        storeValue !== undefined
+          ? String(storeValue)
+          : String(node.props?.defaultValue ?? node.props?.value ?? '')
+      }
+      onChange={handleChange}
+      actionButton={
+        node.props?.actionButton
+          ? {
+            label: node.props.actionButton.label,
+            icon: getIcon(node.props.actionButton.icon),
+            onClick: handleBtnClick,
+            variant: node.props.actionButton.variant,
+            disabled: node.props.actionButton.disabled,
+            isLoading: loading,
+          }
+          : undefined
+      }
+    />
+  );
+};
+
+
+
+
 const SchemaNode: React.FC<SchemaNodeProps> = ({ node, values, setValue, onAction, onPoll, meta }) => {
   if (resolveHidden(node.hidden, values)) {
     return null;
@@ -177,9 +226,11 @@ const SchemaNode: React.FC<SchemaNodeProps> = ({ node, values, setValue, onActio
     case 'group':
       return (
         <div
+          className="atlas-schema-group"
           style={{
             display: 'flex',
             flexDirection: (node.props?.direction as React.CSSProperties['flexDirection']) || 'column',
+            justifyContent: node.props?.justify ?? 'flex-start',
             gap: node.props?.gap ?? '8px',
             alignItems: node.props?.align ?? 'stretch',
             flexWrap: node.props?.wrap ? 'wrap' : 'nowrap',
@@ -204,32 +255,20 @@ const SchemaNode: React.FC<SchemaNodeProps> = ({ node, values, setValue, onActio
       return <ActionButtonNode node={node} onAction={onAction} />;
 
     case 'input':
-      return (
-        <Input
-          {...node.props}
-          label={node.label}
-          value={
-            storeValue !== undefined
-              ? String(storeValue)
-              : String(node.props?.defaultValue ?? node.props?.value ?? '')
-          }
-          onChange={handleChange}
-          description={node.props?.description ?? node.props?.hint}
-        />
-      );
+      return <ActionInputNode node={node} storeValue={storeValue} handleChange={handleChange} onAction={onAction} />;
 
     case 'toggle':
       return (
         <Toggle
           {...node.props}
-          label={node.label || '开关'}
+          label={node.label}
+          description={node.props?.description || node.props?.hint}
           checked={
             storeValue !== undefined
               ? Boolean(storeValue)
               : Boolean(node.props?.defaultChecked ?? node.props?.checked ?? false)
           }
           onChange={handleChange}
-          description={node.props?.description ?? node.props?.hint}
         />
       );
 
@@ -238,13 +277,13 @@ const SchemaNode: React.FC<SchemaNodeProps> = ({ node, values, setValue, onActio
         <Slider
           {...node.props}
           label={node.label}
+          description={node.props?.description || node.props?.hint}
           value={
             storeValue !== undefined
               ? Number(storeValue)
               : Number(node.props?.defaultValue ?? node.props?.value ?? 0)
           }
           onChange={handleChange}
-          description={node.props?.description ?? node.props?.hint}
         />
       );
 
@@ -253,6 +292,7 @@ const SchemaNode: React.FC<SchemaNodeProps> = ({ node, values, setValue, onActio
         <Select
           {...node.props}
           label={node.label}
+          description={node.props?.description || node.props?.hint}
           options={node.props?.options || []}
           value={
             storeValue !== undefined
@@ -260,13 +300,12 @@ const SchemaNode: React.FC<SchemaNodeProps> = ({ node, values, setValue, onActio
               : String(node.props?.defaultValue ?? node.props?.value ?? '')
           }
           onChange={handleChange}
-          description={node.props?.description ?? node.props?.hint}
         />
       );
 
     case 'modal':
       return (
-        <SettingItem {...node.props} label={node.label || '详细信息'}>
+        <SettingItem {...node.props} label={node.label || '详细信息'} description={node.props?.description || node.props?.hint}>
           {node.children ? <SchemaRenderer schema={node.children} meta={meta} /> : null}
         </SettingItem>
       );
@@ -276,6 +315,7 @@ const SchemaNode: React.FC<SchemaNodeProps> = ({ node, values, setValue, onActio
         <SegmentedControl
           {...node.props}
           label={node.label}
+          description={node.props?.description || node.props?.hint}
           options={node.props?.options || []}
           value={
             storeValue !== undefined
@@ -283,17 +323,16 @@ const SchemaNode: React.FC<SchemaNodeProps> = ({ node, values, setValue, onActio
               : String(node.props?.defaultValue ?? node.props?.value ?? '')
           }
           onChange={handleChange}
-          description={node.props?.description ?? node.props?.hint}
         />
       );
 
     case 'label':
       return (
         <div
-          className="text-secondary"
+          className="text-secondary atlas-schema-label"
           style={{
-            fontSize: '14px',
-            padding: '4px 0',
+            fontSize: '15px',
+            color: 'var(--text-primary)',
             ...(node.props?.style || {}),
           }}
         >
@@ -318,12 +357,30 @@ const SchemaNode: React.FC<SchemaNodeProps> = ({ node, values, setValue, onActio
           ? String(storeValue)
           : String(node.props?.value ?? node.props?.defaultValue ?? '');
 
+      const actionEndpoint = node.props?.onInputSubmit;
       return (
         <LogViewer
           {...node.props}
           label={node.label}
           value={value}
           rows={Number(node.props?.rows ?? 10)}
+          onInputSubmit={
+            actionEndpoint
+              ? async (inputVal) => {
+                try {
+                  if (typeof node.props?.onInputSubmit === 'function') {
+                    // For static cases
+                    await node.props.onInputSubmit(inputVal);
+                  } else {
+                    // Execute dynamic schema action endpoint and pass the input securely via body/values
+                    await onAction(`${actionEndpoint}?term=${encodeURIComponent(inputVal)}`);
+                  }
+                } catch (e) {
+                  console.error("LogViewer input failed:", e);
+                }
+              }
+              : undefined
+          }
         />
       );
     }
@@ -370,7 +427,18 @@ export const SchemaRenderer: React.FC<SchemaRendererProps> = ({ schema, meta }) 
       }
 
       try {
-        const response = await moduleContext.apiClient.post(`/api/${action}`, stableValues);
+        let endpoint = action;
+        let queryVal = {};
+
+        // Handle inline terminal query params specially
+        if (action.includes('?term=')) {
+          const parts = action.split('?term=');
+          endpoint = parts[0];
+          queryVal = { command: decodeURIComponent(parts[1]) };
+        }
+
+        const payload = { ...stableValues, ...queryVal };
+        const response = await moduleContext.apiClient.post(`/api/${endpoint}`, payload);
         if (response?.success === false) {
           showToast(response.error || '操作失败', 'error');
           return;

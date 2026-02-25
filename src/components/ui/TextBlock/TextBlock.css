@@ -5,11 +5,11 @@
 }
 
 .atlas-text-hint {
-  margin: 2px 0 14px;
-  padding: 8px 10px;
+  margin: 0;
+  padding: 10px 14px;
   border-radius: 8px;
-  border: 1px dashed rgba(59, 130, 246, 0.25);
-  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-card-hover);
   font-size: 13px;
 }
 

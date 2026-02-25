@@ -57,6 +57,7 @@
   background-clip: padding-box;
 }
 
+
 .atlas-schema-root.atlas-schema-scrollbar-slim::-webkit-scrollbar-thumb:hover,
 .atlas-schema-root.atlas-schema-scrollbar-slim *::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, rgba(96, 165, 250, 1), rgba(52, 211, 153, 1));

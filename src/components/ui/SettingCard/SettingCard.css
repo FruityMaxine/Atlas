@@ -38,3 +38,47 @@
     align-items: center;
     gap: 8px;
 }
+
+/* ============ 卡片内列表项包裹 ============ */
+
+/* 用在手写页面的原生组件 */
+.atlas-setting-card>div:last-child>.atlas-input-container.has-label,
+.atlas-setting-card>div:last-child>.atlas-toggle-container.has-label,
+.atlas-setting-card>div:last-child>.atlas-slider-container.has-label,
+.atlas-setting-card>div:last-child>.atlas-select-container.has-label,
+.atlas-setting-card>div:last-child>.atlas-segmented-container.has-label {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-secondary);
+}
+
+.atlas-setting-card>div:last-child>*:last-child {
+    border-bottom: none !important;
+}
+
+/* 用在通过 SchemaRenderer 声明式加载的组件 */
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-input-container.has-label,
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-toggle-container.has-label,
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-slider-container.has-label,
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-select-container.has-label,
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-segmented-container.has-label,
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-schema-group,
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-schema-label,
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-log-viewer {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-secondary);
+    box-sizing: border-box;
+}
+
+.atlas-setting-card>div:last-child>.atlas-schema-root>*:last-child {
+    border-bottom: none !important;
+}
+
+/* 声明式渲染下的文本段落、按钮间距优化（不再贴着边界） */
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-btn {
+    margin: 16px 20px;
+    width: calc(100% - 40px);
+}
+
+.atlas-setting-card>div:last-child>.atlas-schema-root>.atlas-text-block {
+    margin: 16px 20px;
+}

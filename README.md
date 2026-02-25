@@ -2,9 +2,9 @@
 
 > 一个具有 ClashVerge 级别 UI 的跨语言模块化桌面应用框架
 
-**版本**: v0.2.0  
+**版本**: v0.2.1  
 **技术栈**: Tauri + React + TypeScript + Rust  
-**开发状态**: 🚧 开发中 (Phase 2: Rust Backend & 低代码框架)
+**开发状态**: 🚧 开发中 (Phase 2: 声明式UI引擎构建完毕，正推进Rust进程管理与错误校验)
 **项目名称**: Atlas 而非 Atlas Workbench
 
 ---
@@ -159,12 +159,13 @@ Atlas 启动器（主程序，TypeScript + React）
 
 #### (6) 开发者必备特性 (Essential Features)
 除了上述功能，框架还将内置以下**关键能力**：
-- **🔍 条件渲染 (Conditional Logic)**：
+- **🔍 条件渲染 (Conditional Logic)**：(进行中)
   - 例：仅当 `"proxy_enabled": true` 时，才显示 "代理IP" 输入框。
   - 语法：`"hidden": "!$proxy_enabled"`
-- **🌐 国际化 (i18n)**：JSON 中的字符串支持引用语言包 key，如 `s.module.start_btn`。
-- **🛡️ 自动校验 (Validation)**：输入框自动支持 Min/Max/Regex 校验，并提示错误。
-- **⚡ 事件绑定 (Action Binding)**：按钮点击自动触发后端 Python 函数或页面跳转。
+- **🌐 国际化 (i18n)**：(待办) JSON 中的字符串支持引用语言包 key，如 `s.module.start_btn`。
+- **🛡️ 自动校验 (Validation)**：(待办) 输入框自动支持 Min/Max/Regex 校验，并提示错误。
+- **⚡ 事件绑定 (Action Binding)**：(已完成) 按钮点击、终端输入自动触发后端 Python 函数 (`apiClient.post`)。
+- **💬 终端级交互 (Interactive Terminal)**：(已完成) 允许在配置中直接挂载带 `onInputSubmit` 的控制台，作为开发者与后端的双层命令通道。
 
 ### 4. ClashVerge 级别 UI
 
@@ -420,15 +421,24 @@ F:/bbb/Atlas_Workbench/Atlas/
 - Vite 动态 import
 - Error Boundary
 
-### Phase 2: 后端服务管理（第 5-6 周）
+### Phase 2: 后端服务管理 & 声明式低代码框架（第 5-6 周）
 
-#### 2.1 进程启动与管理
+#### 2.1 声明式 UI 前端引擎 (SchemaRenderer) - [完全体]
 
-**功能**：
-- [ ] 启动 Python/Java 后端服务
-- [ ] 静默启动（无命令行窗口）
-- [ ] 端口管理（动态分配）
-- [ ] 进程监控
+**功能已完成**：
+- [x] 核心引挚：递归渲染 `layout.json5` 到 `React` 树
+- [x] 布局管理器：`Group` (Flex响应式), `Container` (统一设置卡片)
+- [x] 基础原子组件：`Input` (带附加操作按钮), `Button`, `Toggle`, `SegmentedControl`, `Slider`
+- [x] 高阶/交互组件：`Poller` (定时轮询状态), `LogViewer` (具备双向通信的黑客级内置终端终端)
+- [x] 数据管道：输入框回车拦截、双向数据绑定 (`Zustand` store 同步)、底层的 `apiClient` Payload 打包。
+
+#### 2.2 服务进程启动与管理 - [🚧 开发中]
+
+**基础进程控制**：
+- [x] 启动 Python/Java 后端服务 (通过 Tauri `Command::spawn`)
+- [ ] 静默启动（无命令行窗口，需深入改进）
+- [ ] 端口管理（动态分配防冲突）
+- [ ] Rust层：`apiClient` 与 Tauri Invoker 真正的系统资源双向打通
 
 **技术要点**：
 - Rust `std::process::Command`
@@ -1017,16 +1027,17 @@ if __name__ == '__main__':
   - [ ] 进程 PID 注册表管理 (`Arc<Mutex<HashMap>>`)。
 - [ ] **Tauri IPC**: 暴露 `launch_module(id)` 和 `stop_module(id)` 接口。
 
-**2.2 声明式 UI 引擎 (Declarative Engine)**
-- [ ] **Engine Core**:
-  - [ ] 引入 `json5` 解析库。
-  - [ ] 实现 `SchemaRenderer.tsx` 递归渲染器。
-- [ ] **Component Mapping**:
-  - [ ] 将 JSON `input` 映射到 `<Input />`。
-  - [ ] 将 JSON `container` 映射到 `<SettingCard />`。
-- [ ] **Dynamic Features**:
-  - [ ] 实现简单的条件渲染 (`hidden: "!$enable"`)。
-  - [ ] 实现表单数据收集 (`FormData` 绑定)。
+**2.2 声明式 UI 引擎 (Declarative Engine) [✅ Completed]**
+- [x] **Engine Core**:
+  - [x] 引入 `json5` 解析库。
+  - [x] 实现 `SchemaRenderer.tsx` 递归渲染器。
+- [x] **Component Mapping**:
+  - [x] 将 JSON `input` 映射到 `<Input />` (支持 actionButton)。
+  - [x] 将 JSON `container` 映射到 `<SettingCard />`。
+  - [x] 新增复杂原子组件: `<LogViewer />` (内置终端通道).
+- [x] **Dynamic Features**:
+  - [x] 简单的条件渲染 (`hidden: "!$enable"`)初具雏形。
+  - [x] 实现表单数据收集 (`Zustand` 双向绑定 & `apiClient` 打包发送)。
 
 #### Phase 3: 模块集成与全链路测试 (📅 Planned)
 > **Goal**: 跑通 "配置 -> 界面 -> 启动 -> 运行" 的完整闭环。
